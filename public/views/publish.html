@@ -1,0 +1,17 @@
+<a class="btn previous" ng-click="$goTo('/')"><b>‹</b> Retour</a>
+<h2>Publier un nouveau parcours</h2>
+<form name="formPub">
+    <div class="group-upload">
+        <label for="desc">Fichier json:</label>
+        <span ngf-select ng-model="desc" id="desc" name="desc" class="icon-upload" required ngf-pattern="'.json'" ng-change="generatePreview()"></span>
+        <span ng-show="desc" class="file-selected">Fichier sélectionné</span>
+    </div>
+    <pre class="preview-json" ng-show="preview">{{preview}}</pre>
+    <div class="group-upload">
+        <label for="content">Fichier zip (<b>ne pas renommer ce fichier</b>):</label>
+        <span ngf-select ng-model="content" id="content" name="content" class="icon-upload" required ngf-pattern="'.zip'"></span>
+        <span ng-show="content" class="file-selected">Fichier sélectionné</span>
+    </div> 
+    <input type="submit" class="btn btn-submit" value="Valider" ng-class="{'btn-disabled':formPub.$invalid || progress}" ng-disabled="formPub.$invalid || progress" ng-hide="progress" ng-click="upload()">
+    <p ng-show="progress" class="progress-percentage">Progression: {{progress}} %</p>
+</form>
