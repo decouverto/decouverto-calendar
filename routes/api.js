@@ -40,15 +40,13 @@ router.post('/events/', function (req, res) {
         if (err) {
             res.send(err);
         }
-        console.log(event)
-        res.json({message: 'ok'});
+        res.json(event);
     });
 });
 
 router.get('/events/:id', function (req, res) {
     Events.findById(req.params.id, function (err, event) {
-        if (err)
-            res.send(err);
+        if (err) res.send(err);
         res.json(event);
     });
 })
@@ -72,7 +70,7 @@ router.put('/events/:id', function (req, res) {
             if (err) {
                 res.send(err);
             }
-            res.json({ message: 'Bravo, mise à jour des données OK' });
+            res.json(event);
         });
     });
 })
@@ -82,7 +80,7 @@ router.delete('/events/:id', function (req, res) {
         if (err) {
             res.send(err);
         }
-        res.json({ message: "Bravo, event supprimée" });
+        res.json({ message: 'Successfully deleted' });
     });
 
 });

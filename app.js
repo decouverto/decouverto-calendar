@@ -58,6 +58,8 @@ app.use('/api/', require('./routes/api'));
 
 // user collection 
 var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/decouverto', { useNewUrlParser: true });
+var connection = mongoose.connection;
 
 // authentication
 passport.serializeUser(function (model, done) {
@@ -65,21 +67,15 @@ passport.serializeUser(function (model, done) {
 });
 
 passport.deserializeUser(function (email, done) {
-    mongoose.connect('mongodb://localhost:27017/decouverto', { useNewUrlParser: true });
-    var connection = mongoose.connection;
-    connection.once('open', function () {
-        connection.db.collection('users', function (err, collection) {
-            collection.findOne({ email: email }, function (err, model) {
-                if (model != null) {
-                    delete model.password;
-                    return done(err, model);
-                }
-                connection.close();
-                done(err, false);
-            });
+    connection.db.collection('users', function (err, collection) {
+        collection.findOne({ email: email }, function (err, model) {
+            if (model != null) {
+                delete model.password;
+                return done(err, model);
+            }
+            done(err, false);
         });
     });
-    connection.on('error', done);
 });
 
 var LocalStrategy = require('passport-local').Strategy;
@@ -91,35 +87,29 @@ passport.use('local', new LocalStrategy({
     passReqToCallBack: true
 }, function (email, password, done) {
     // search in database
-    mongoose.connect('mongodb://localhost:27017/decouverto', { useNewUrlParser: true });
-    var connection = mongoose.connection;
-    connection.once('open', function () {
-        connection.db.collection('users', function (err, collection) {
-            collection.findOne({ email: email }, function (err, model) {
-                connection.close();
-                if (err) { return done(err); }
-                if (!model) {
-                    return done(null, false, { message: 'invalid-email' });
+    connection.db.collection('users', function (err, collection) {
+        collection.findOne({ email: email }, function (err, model) {
+            if (err) { return done(err); }
+            if (!model) {
+                return done(null, false, { message: 'invalid-email' });
+            }
+            // test password
+            hash(password).verifyAgainst(model.password, function (err, verified) {
+                if (err || !verified) {
+                    return done(null, false, {
+                        message: 'invalid-password'
+                    });
+                } else {
+                    var returnmodel = {
+                        email: model.email
+                    };
+                    return done(null, returnmodel, {
+                        message: 'Connexion réussi.'
+                    });
                 }
-                // test password
-                hash(password).verifyAgainst(model.password, function (err, verified) {
-                    if (err || !verified) {
-                        return done(null, false, {
-                            message: 'invalid-password'
-                        });
-                    } else {
-                        var returnmodel = {
-                            email: model.email
-                        };
-                        return done(null, returnmodel, {
-                            message: 'Connexion réussi.'
-                        });
-                    }
-                });
             });
         });
     });
-    connection.on('error', done);
 }));
 
 // catch 404 and forward to error handler
