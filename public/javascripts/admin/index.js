@@ -1,7 +1,6 @@
 require('angular'); /*global angular*/
 require('angular-route');
 require('ng-notie');
-require('ng-file-upload');
 require('./tinymce/tinymce.min.js');
 require('./tinymce/ui-tinymce.js');
 

@@ -1,25 +1,24 @@
 <a class="btn previous" ng-click="$goTo('/')">
     <b>‹</b> Retour</a>
-<a class="btn previous" ng-click="$goTo('/edit-shop/new')">Ajouter un point de vente</a>
-<h2>Liste des points de vente</h2>
-<p>Il y a aujourd'hui {{shops.length}} points de vente.</p>
-<table ng-show="shops.length">
+<h2>Liste des événements</h2>
+<p>Il y a aujourd'hui {{events.length}} événements.</p>
+<table ng-show="events.length">
     <tr>
         <th>Id</th>
         <th>Nom</th>
         <th>Actions</th>
     </tr>
-    <tr ng-repeat="shop in shops">
+    <tr ng-repeat="event in events">
         <td>
-            {{shop.id}}
+            {{event.id}}
         </td>
         <td>
-            {{shop.title}}
+            {{event.title}}
         </td>
         <td>
-            <a class="icon-trash clickable" ng-click="removeShop(shop.id)"></a>
-            <a class="icon-pencil clickable" ng-click="$goTo('/edit-shop/'+shop.id)"></a>
+            <a class="icon-trash clickable" ng-click="removeEvent(event.id)"></a>
+            <a class="icon-pencil clickable" ng-click="$goTo('/edit-event/'+event.id)"></a>
         </td>
     </tr>
 </table>
-<p ng-hide="shops.length">Aucun point de vente n'a été ajouté.</p>
+<p ng-hide="events.length">Aucun événement n'a été ajouté.</p>

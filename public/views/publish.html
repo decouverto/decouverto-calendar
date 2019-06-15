@@ -1,17 +1,53 @@
 <a class="btn previous" ng-click="$goTo('/')"><b>‹</b> Retour</a>
-<h2>Publier un nouveau parcours</h2>
+<h2>Publier un nouvel événement</h2>
 <form name="formPub">
-    <div class="group-upload">
-        <label for="desc">Fichier json:</label>
-        <span ngf-select ng-model="desc" id="desc" name="desc" class="icon-upload" required ngf-pattern="'.json'" ng-change="generatePreview()"></span>
-        <span ng-show="desc" class="file-selected">Fichier sélectionné</span>
+    <h4>Titre</h4>
+    <input type="text" ng-model="event.title">
+    <h4>Description</h4>
+    <textarea ui-tinymce="tinymceOptions" ng-model="event.description"></textarea>
+    <hr>
+    <h4>Type d'événement</h4>
+    <input type="text" ng-model="event.type">
+    <hr>
+    <h3>Heures</h3>
+    <h4>Départ</h4>
+    <input type="datetime-local" ng-model="event.start" ng-min="now" placeholder="aaaa-MM-ddTHH:mm:ss" required />
+    <h4>Fin</h4>
+    <label class="checkbox-container">Heure de fin définie
+        <input type="checkbox" ng-checked="event.is_defined_end" ng-model="event.is_defined_end" ng-true-value="true"
+            ng-false-value="false">
+        <span class="checkmark"></span>
+    </label>
+    <input type="datetime-local" ng-show="event.is_defined_end" ng-model="event.end" ng-min="event.start"
+        placeholder="aaaa-MM-ddTHH:mm:ss" />
+    <hr>
+    <h3>Localisation</h3>
+    <label class="checkbox-container">Événement localisé
+        <input type="checkbox" ng-checked="event.is_located" ng-model="event.is_located" ng-true-value="true"
+            ng-false-value="false">
+        <span class="checkmark"></span>
+    </label>
+    <div ng-show="event.is_located">
+        <input type="text" ng-model="event.type">
+        <p><a href="https://www.gps-longitude-latitude.net/" target="_blank">Obtenir latitude et longitude</a></p>
+        <h4>Nom - Adresse</h4>
+        <input type="text" ng-model="event.location_name">
+        <h4>Longitude <i>(souvent en '7.')</i> </h4>
+        <input type="number" step="0.00001" ng-model="event.long">
+        <h4>Latitude <i>(souvent en '48.')</i> </h4>
+        <input type="number" step="0.00001" ng-model="event.lat">
     </div>
-    <pre class="preview-json" ng-show="preview">{{preview}}</pre>
-    <div class="group-upload">
-        <label for="content">Fichier zip (<b>ne pas renommer ce fichier</b>):</label>
-        <span ngf-select ng-model="content" id="content" name="content" class="icon-upload" required ngf-pattern="'.zip'"></span>
-        <span ng-show="content" class="file-selected">Fichier sélectionné</span>
-    </div> 
-    <input type="submit" class="btn btn-submit" value="Valider" ng-class="{'btn-disabled':formPub.$invalid || progress}" ng-disabled="formPub.$invalid || progress" ng-hide="progress" ng-click="upload()">
-    <p ng-show="progress" class="progress-percentage">Progression: {{progress}} %</p>
+    <hr>
+    <h3>Inscription</h3>
+    <label class="checkbox-container">Possibilité de s'inscrire
+        <input type="checkbox" ng-checked="event.can_subscribe" ng-model="event.can_subscribe" ng-true-value="true"
+            ng-false-value="false">
+        <span class="checkmark"></span>
+    </label>
+    <div ng-show="event.can_subscribe">
+        <h4>Nombre de place</h4>
+        <input type="number" step="1" ng-model="event.number_limit">
+    </div>
+    <input type="submit" class="btn btn-submit" value="Valider" ng-class="{'btn-disabled':formPub.$invalid}"
+        ng-disabled="formPub.$invalid" ng-hide="progress" ng-click="upload()">
 </form>

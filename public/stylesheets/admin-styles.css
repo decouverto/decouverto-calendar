@@ -107,39 +107,18 @@ select {
     background-color: rgb(229, 229, 229) !important;
 }
 
-.preview-json {
-    background-color: #ecf0f1;
-    overflow: scroll
-}
-
-.progress-percentage {
-    float: right;
-    border-radius: 25px;
-    border: 2px solid #dc3133;
-    padding: 10px;
-}
-
-.footer {
-    position: fixed;
-    bottom: 20px;
-    right: 50px;
-}
-
-.footer a,
-.footer span {
+a.logout {
     margin: 10px;
+    margin-bottom: 30px;
     border-radius: 25px;
     border: 2px solid #dc3133;
     padding: 10px;
-}
-
-.footer a {
+    float: right;
     text-decoration: none;
     color: black;
 }
 
-.footer span,
-.footer a:hover {
+a.logout:hover {
     color: white;
     background: #dc3133;
 }

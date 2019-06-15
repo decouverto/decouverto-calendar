@@ -35,6 +35,7 @@ router.post('/events/', function (req, res) {
         name: req.body.location_name
     };
     event.description = req.body.description;
+    event.number_limit = req.body.number_limit;
 
     event.save(function (err) {
         if (err) {
@@ -60,6 +61,7 @@ router.put('/events/:id', function (req, res) {
         event.start = req.body.start;
         event.end = req.body.end;
         event.can_subscribe = req.body.can_subscribe;
+        event.number_limit = req.body.number_limit;
         event.location = {
             lat: req.body.lat,
             long: req.body.long,

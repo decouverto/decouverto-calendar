@@ -13,6 +13,7 @@ module.exports = new mongoose.Schema({
         name: String
     },
     description: String,
+    number_limit: Number,
     emails: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Email' }]
 });
 
