@@ -19,7 +19,17 @@ router.get('/events/', function (req, res) {
         }
         res.json(events);
     });
+});
+
+router.get('/events/types', function (req, res) {
+    Events.distinct('type', function (err, events) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(events);
+    });
 })
+
 
 router.post('/events/', function (req, res) {
     var event = new Events();
@@ -28,7 +38,7 @@ router.post('/events/', function (req, res) {
     event.type = req.body.type;
     event.start = req.body.start;
     event.description = req.body.description;
-    
+
 
     event.can_subscribe = req.body.can_subscribe;
     if (req.body.can_subscribe) {
@@ -38,7 +48,7 @@ router.post('/events/', function (req, res) {
     if (req.body.is_defined_end) {
         event.end = req.body.end;
     }
-    
+
     event.is_located = req.body.is_located;
     if (req.body.is_located) {
         event.location = {

@@ -7,7 +7,10 @@
     <textarea ui-tinymce="tinymceOptions" ng-model="event.description"></textarea>
     <hr>
     <h4>Type d'événement</h4>
-    <input type="text" ng-model="event.type" required>
+    <input type="text" ng-model="event.type" required ng-keyup="checkTheme(event.type)">
+    <p class="warning" ng-if="!existsType">Attention, le type "{{event.type}}" n'existe pas encore, vous allez le créer.
+    </p>
+    <p>Types existants: <span ng-repeat="type in types">"{{type}}"&nbsp;</span></p>
     <hr>
     <h3>Heures</h3>
     <h4>Départ</h4>
@@ -50,6 +53,7 @@
     <hr>
     <h4>Id de la randonnée associée (optionnel)</h4>
     <input type="text" ng-model="event.walk_id">
-    <input type="submit" class="btn btn-submit" value="Valider" ng-class="{'btn-disabled':formPub.$invalid || invalidForm(event)}"
+    <input type="submit" class="btn btn-submit" value="Valider"
+        ng-class="{'btn-disabled':formPub.$invalid || invalidForm(event)}"
         ng-disabled="formPub.$invalid || invalidForm(event)" ng-hide="progress" ng-click="publish()">
 </form>

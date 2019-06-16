@@ -20,7 +20,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
 
     $scope.event = {
         title: '',
-        type: 'Randonnée', // ajouter vérification des types existants
+        type: 'Randonnée', 
         start: nextSunday(10),
         is_defined_end: false,
         end: nextSunday(19),
@@ -47,6 +47,21 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
         }
         return invalid;
     };
+
+    $http.get('/api/events/types').success(function(types) {
+        $scope.existsType = true;
+        $scope.types = types;
+        $scope.checkTheme = function (type) {
+            var e = false;
+            for (var k in types) {
+                if (type == types[k]) {
+                    e = true;
+                    break;
+                }
+            }
+            $scope.existsType = e;
+        }
+    }).error($rootScope.$error);
 
     $scope.publish = function () {
         $scope.progress = true
