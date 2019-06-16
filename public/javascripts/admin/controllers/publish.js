@@ -4,7 +4,8 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
         skin: 'lightgray',
         theme: 'modern'
     };
-    $scope.lpath = '/'
+    $scope.lpath = '/';
+    $scope.edit = false;
 
     function nextSunday(hour) { // obtenir le prochain dimanche avec l'heure
         var now = new Date();

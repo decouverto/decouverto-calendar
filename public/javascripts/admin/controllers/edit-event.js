@@ -5,6 +5,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
         theme: 'modern'
     };
     $scope.lpath = '/list-events'
+    $scope.edit = true;
 
     $scope.now = new Date();
     $scope.event = { description: '' };

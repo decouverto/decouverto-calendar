@@ -1,5 +1,6 @@
 <a class="btn previous" ng-click="$goTo(lpath)"><b>‹</b> Retour</a>
-<h2>Publier un nouvel événement</h2>
+<h2 ng-hide="edit">Publier un nouvel événement</h2>
+<h2 ng-show="edit">Édition d'un événement</h2>
 <form name="formPub">
     <h4>Titre</h4>
     <input type="text" ng-model="event.title" ng-keyup="invalidForm()">
