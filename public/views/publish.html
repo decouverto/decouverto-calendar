@@ -2,12 +2,12 @@
 <h2>Publier un nouvel événement</h2>
 <form name="formPub">
     <h4>Titre</h4>
-    <input type="text" ng-model="event.title">
+    <input type="text" ng-model="event.title" required>
     <h4>Description</h4>
     <textarea ui-tinymce="tinymceOptions" ng-model="event.description"></textarea>
     <hr>
     <h4>Type d'événement</h4>
-    <input type="text" ng-model="event.type">
+    <input type="text" ng-model="event.type" required>
     <hr>
     <h3>Heures</h3>
     <h4>Départ</h4>
@@ -28,7 +28,6 @@
         <span class="checkmark"></span>
     </label>
     <div ng-show="event.is_located">
-        <input type="text" ng-model="event.type">
         <p><a href="https://www.gps-longitude-latitude.net/" target="_blank">Obtenir latitude et longitude</a></p>
         <h4>Nom - Adresse</h4>
         <input type="text" ng-model="event.location_name">
@@ -48,6 +47,9 @@
         <h4>Nombre de place</h4>
         <input type="number" step="1" ng-model="event.number_limit">
     </div>
-    <input type="submit" class="btn btn-submit" value="Valider" ng-class="{'btn-disabled':formPub.$invalid}"
-        ng-disabled="formPub.$invalid" ng-hide="progress" ng-click="upload()">
+    <hr>
+    <h4>Id de la randonnée associée (optionnel)</h4>
+    <input type="text" ng-model="event.walk_id">
+    <input type="submit" class="btn btn-submit" value="Valider" ng-class="{'btn-disabled':formPub.$invalid || invalidForm(event)}"
+        ng-disabled="formPub.$invalid || invalidForm(event)" ng-hide="progress" ng-click="publish()">
 </form>

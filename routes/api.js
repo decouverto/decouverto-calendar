@@ -27,15 +27,28 @@ router.post('/events/', function (req, res) {
     event.title = req.body.title;
     event.type = req.body.type;
     event.start = req.body.start;
-    event.end = req.body.end;
-    event.can_subscribe = req.body.can_subscribe;
-    event.location = {
-        lat: req.body.lat,
-        long: req.body.long,
-        name: req.body.location_name
-    };
     event.description = req.body.description;
-    event.number_limit = req.body.number_limit;
+    
+
+    event.can_subscribe = req.body.can_subscribe;
+    if (req.body.can_subscribe) {
+        event.number_limit = req.body.number_limit;
+    }
+    event.is_defined_end = req.body.is_defined_end;
+    if (req.body.is_defined_end) {
+        event.end = req.body.end;
+    }
+    
+    event.is_located = req.body.is_located;
+    if (req.body.is_located) {
+        event.location = {
+            lat: req.body.lat,
+            long: req.body.long,
+            name: req.body.location_name
+        };
+    }
+
+    event.walk_id = req.body.walk_id;
 
     event.save(function (err) {
         if (err) {

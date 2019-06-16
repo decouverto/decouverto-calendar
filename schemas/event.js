@@ -14,6 +14,9 @@ module.exports = new mongoose.Schema({
     },
     description: String,
     number_limit: Number,
+    is_located: Boolean,
+    is_defined_end: Boolean,
+    walk_id: String,
     emails: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Email' }]
 });
 
