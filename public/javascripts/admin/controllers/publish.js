@@ -4,7 +4,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
         skin: 'lightgray',
         theme: 'modern'
     };
-
+    $scope.lpath = '/'
 
     function nextSunday(hour) { // obtenir le prochain dimanche avec l'heure
         var now = new Date();
@@ -34,19 +34,27 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
         walk_id: '',
     };
 
-    $scope.invalidForm = function (event) {
+    $scope.invalidForm = function () {
         var invalid = false;
-        if (event.description == '') {
+        if ($scope.event.description == '') {
             invalid = true;
         }
-        if (event.is_located && (event.location_name == '' || event.lat == 0 || event.long == 0)) {
+        if ($scope.event.type == '') {
             invalid = true;
         }
-        if (event.can_subscribe && event.number_limit == 0) {
+        if ($scope.event.title == '') {
             invalid = true;
         }
-        return invalid;
+        if ($scope.event.is_located && ($scope.event.location_name == '' || $scope.event.lat == 0 || $scope.event.long == 0)) {
+            invalid = true;
+        }
+        if ($scope.event.can_subscribe && $scope.event.number_limit == 0) {
+            invalid = true;
+        }
+        $scope.invalid = invalid;
     };
+
+    $scope.invalid = false;
 
     $http.get('/api/events/types').success(function(types) {
         $scope.existsType = true;

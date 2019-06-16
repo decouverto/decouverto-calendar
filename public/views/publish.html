@@ -1,59 +1,59 @@
-<a class="btn previous" ng-click="$goTo('/')"><b>‹</b> Retour</a>
+<a class="btn previous" ng-click="$goTo(lpath)"><b>‹</b> Retour</a>
 <h2>Publier un nouvel événement</h2>
 <form name="formPub">
     <h4>Titre</h4>
-    <input type="text" ng-model="event.title" required>
+    <input type="text" ng-model="event.title" ng-keyup="invalidForm()">
     <h4>Description</h4>
-    <textarea ui-tinymce="tinymceOptions" ng-model="event.description"></textarea>
+    <textarea ui-tinymce="tinymceOptions" ng-model="event.description" ng-keyup="invalidForm()"></textarea>
     <hr>
     <h4>Type d'événement</h4>
-    <input type="text" ng-model="event.type" required ng-keyup="checkTheme(event.type)">
+    <input type="text" ng-model="event.type" ng-keyup="checkTheme(event.type); invalidForm()">
     <p class="warning" ng-if="!existsType">Attention, le type "{{event.type}}" n'existe pas encore, vous allez le créer.
     </p>
     <p>Types existants: <span ng-repeat="type in types">"{{type}}"&nbsp;</span></p>
     <hr>
     <h3>Heures</h3>
     <h4>Départ</h4>
-    <input type="datetime-local" ng-model="event.start" ng-min="now" placeholder="aaaa-MM-ddTHH:mm:ss" required />
+    <input type="datetime-local" ng-model="event.start" min="{{now | date:'yyyy-MM-ddTHH:mm:ss'}}" placeholder="aaaa-MM-ddTHH:mm:ss" />
     <h4>Fin</h4>
     <label class="checkbox-container">Heure de fin définie
         <input type="checkbox" ng-checked="event.is_defined_end" ng-model="event.is_defined_end" ng-true-value="true"
             ng-false-value="false">
         <span class="checkmark"></span>
     </label>
-    <input type="datetime-local" ng-show="event.is_defined_end" ng-model="event.end" ng-min="event.start"
+    <input type="datetime-local" ng-show="event.is_defined_end" ng-model="event.end" min="{{event.start | date:'yyyy-MM-ddTHH:mm:ss'}}"
         placeholder="aaaa-MM-ddTHH:mm:ss" />
     <hr>
     <h3>Localisation</h3>
     <label class="checkbox-container">Événement localisé
         <input type="checkbox" ng-checked="event.is_located" ng-model="event.is_located" ng-true-value="true"
-            ng-false-value="false">
+            ng-false-value="false" ng-change="invalidForm()">
         <span class="checkmark"></span>
     </label>
     <div ng-show="event.is_located">
         <p><a href="https://www.gps-longitude-latitude.net/" target="_blank">Obtenir latitude et longitude</a></p>
         <h4>Nom - Adresse</h4>
-        <input type="text" ng-model="event.location_name">
+        <input type="text" ng-model="event.location_name" ng-keyup="invalidForm()">
         <h4>Longitude <i>(souvent en '7.')</i> </h4>
-        <input type="number" step="0.00001" ng-model="event.long">
+        <input type="number" step="0.00001" ng-model="event.long" ng-keyup="invalidForm()">
         <h4>Latitude <i>(souvent en '48.')</i> </h4>
-        <input type="number" step="0.00001" ng-model="event.lat">
+        <input type="number" step="0.00001" ng-model="event.lat" ng-keyup="invalidForm()">
     </div>
     <hr>
     <h3>Inscription</h3>
     <label class="checkbox-container">Possibilité de s'inscrire
-        <input type="checkbox" ng-checked="event.can_subscribe" ng-model="event.can_subscribe" ng-true-value="true"
+        <input type="checkbox" ng-checked="event.can_subscribe"  ng-change="invalidForm()" ng-model="event.can_subscribe" ng-true-value="true"
             ng-false-value="false">
         <span class="checkmark"></span>
     </label>
     <div ng-show="event.can_subscribe">
         <h4>Nombre de place</h4>
-        <input type="number" step="1" ng-model="event.number_limit">
+        <input type="number" step="1" ng-model="event.number_limit" ng-keyup="invalidForm()">
     </div>
     <hr>
     <h4>Id de la randonnée associée (optionnel)</h4>
     <input type="text" ng-model="event.walk_id">
     <input type="submit" class="btn btn-submit" value="Valider"
-        ng-class="{'btn-disabled':formPub.$invalid || invalidForm(event)}"
-        ng-disabled="formPub.$invalid || invalidForm(event)" ng-hide="progress" ng-click="publish()">
+        ng-class="{'btn-disabled': invalid}"
+        ng-disabled="invalid" ng-hide="progress" ng-click="publish()">
 </form>

@@ -22,7 +22,7 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'ListEventsCtrl'
         })
         .when('/edit-event/:id', {
-            templateUrl: '/views/edit-event.html',
+            templateUrl: '/views/publish.html',
             controller: 'EditEventCtrl'
         })
         .otherwise({

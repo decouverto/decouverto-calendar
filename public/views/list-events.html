@@ -1,23 +1,26 @@
 <a class="btn previous" ng-click="$goTo('/')">
     <b>‹</b> Retour</a>
 <h2>Liste des événements</h2>
-<p>Il y a aujourd'hui {{events.length}} événements.</p>
 <table ng-show="events.length">
     <tr>
-        <th>Id</th>
+        <th>Type</th>
+        <th>Date</th>
         <th>Nom</th>
         <th>Actions</th>
     </tr>
     <tr ng-repeat="event in events">
         <td>
-            {{event.id}}
+            {{event.type}}
+        </td>
+        <td>
+            {{event.start | date:'dd/MM/yyyy HH'}}h
         </td>
         <td>
             {{event.title}}
         </td>
         <td>
-            <a class="icon-trash clickable" ng-click="removeEvent(event.id)"></a>
-            <a class="icon-pencil clickable" ng-click="$goTo('/edit-event/'+event.id)"></a>
+            <a class="icon-trash clickable" ng-click="removeEvent(event._id)"></a>
+            <a class="icon-pencil clickable" ng-click="$goTo('/edit-event/'+event._id)"></a>
         </td>
     </tr>
 </table>

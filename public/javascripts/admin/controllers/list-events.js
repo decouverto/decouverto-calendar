@@ -1,5 +1,8 @@
 module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', function ($scope, $http, $rootScope, notie, $location) {
-    $scope.events=[];
+    
+    $http.get('/api/events').success(function(events) {
+        $scope.events=events;
+    }).error($rootScope.$error);
 
     $scope.removeEvent = function (id) {
         notie.confirm('Êtes-vous sûre de vouloir supprimer cet événement ?', 'Oui', 'Annuler', function() {
