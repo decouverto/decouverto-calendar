@@ -7,7 +7,7 @@ var path = require('path');
  */
 
 var app = require('../app');
-var debug = require('debug')('decouverto-website:server');
+var debug = require('debug')('decouverto-calendar:server');
 var http = require('http');
 
 /**

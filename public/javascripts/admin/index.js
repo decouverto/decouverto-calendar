@@ -25,6 +25,14 @@ app.config(['$routeProvider', function($routeProvider) {
             templateUrl: '/views/publish.html',
             controller: 'EditEventCtrl'
         })
+        .when('/emails-event/:id', {
+            templateUrl: '/views/emails-event.html',
+            controller: 'EmailsEventCtrl'
+        })
+        .when('/share-event/:id', {
+            templateUrl: '/views/share-event.html',
+            controller: 'ShareEventCtrl'
+        })
         .otherwise({
             redirectTo: '/'
         });
@@ -41,3 +49,5 @@ app.controller('HomeCtrl', require('./controllers/home.js'));
 app.controller('PublishCtrl', require('./controllers/publish.js'));
 app.controller('ListEventsCtrl', require('./controllers/list-events.js'));
 app.controller('EditEventCtrl', require('./controllers/edit-event.js'));
+app.controller('ShareEventCtrl', require('./controllers/share-event.js'));
+app.controller('EmailsEventCtrl', require('./controllers/emails-event.js'));

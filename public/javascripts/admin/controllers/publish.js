@@ -55,8 +55,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
         $scope.invalid = invalid;
     };
 
-    $scope.invalid = false;
-
+    $scope.invalid = true;
     $http.get('/api/events/types').success(function(types) {
         $scope.existsType = true;
         $scope.types = types;
