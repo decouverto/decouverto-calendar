@@ -1,6 +1,7 @@
 <a class="btn previous" ng-click="$goTo('/')">
     <b>‹</b> Retour</a>
 <h2>Liste des événements</h2>
+<p>En noir figurent les événements passés devant être supprimés.</p>
 <table ng-show="events.length">
     <tr>
         <th>Type</th>
@@ -8,7 +9,7 @@
         <th>Nom</th>
         <th>Actions</th>
     </tr>
-    <tr ng-repeat="event in events">
+    <tr ng-repeat="event in events | orderBy: 'start'" ng-class="{'old-event': event.old}">
         <td>
             {{event.type}}
         </td>

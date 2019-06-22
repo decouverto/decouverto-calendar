@@ -147,6 +147,17 @@ tr:nth-child(even) {
     background-color: #f2f2f2
 }
 
+tr.old-event {
+    background-color: #424242;
+    color: #FAFAFA;
+    border: solid;
+    border-width: 1px 0;
+}
+
+tr:nth-child(2) {
+    border-top: none;
+}
+
 th {
     background-color: #dc3133;
     color: white;
