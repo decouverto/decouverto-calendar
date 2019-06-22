@@ -1,6 +1,6 @@
 module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', function ($scope, $http, $rootScope, notie, $location) {
     
-    $http.get('/api/events').success(function(events) {
+    $http.get('./api/events').success(function(events) {
         for(var i=0; i<events.length; i++) {
             var start = (new Date(events[i].start)).getTime();
             var now = (new Date()).getTime();

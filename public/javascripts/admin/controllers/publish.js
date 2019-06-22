@@ -56,7 +56,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
     };
 
     $scope.invalid = true;
-    $http.get('/api/events/types').success(function(types) {
+    $http.get('./api/events/types').success(function(types) {
         $scope.existsType = true;
         $scope.types = types;
         $scope.checkTheme = function (type) {
@@ -73,7 +73,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
 
     $scope.publish = function () {
         $scope.progress = true
-        $http.post('/api/events/', $scope.event).success(function () {
+        $http.post('./api/events/', $scope.event).success(function () {
             notie.alert(1, 'L\'événement a été ajouté.', 3);
             $scope.progress = false;
             $location.path('/list-events/');

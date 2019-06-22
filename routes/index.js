@@ -28,7 +28,6 @@ var weekdays = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', '
 router.get('/', function (req, res) {
     Events.find({ start: { $gte: new Date() }}).sort({start: 'asc'}).exec(function (err, events) {
         if (err) {
-            res.send(err);
             res.locals.events = [];
         } else {
             for(var i=0; i<events.length; i++) {

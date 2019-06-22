@@ -10,7 +10,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
     $scope.now = new Date();
     $scope.event = { description: '' };
     
-    $http.get('/api/events/' + $routeParams.id).success(function (event) {
+    $http.get('./api/events/' + $routeParams.id).success(function (event) {
         $scope.event = {
             title: event.title,
             type: event.type, 

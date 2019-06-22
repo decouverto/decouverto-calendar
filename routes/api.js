@@ -12,26 +12,22 @@ var connection = mongoose.createConnection('mongodb://localhost:27017/decouverto
 var Events = connection.model('Events', eventSchema);
 var Emails = connection.model('Emails', emailSchema);
 
-router.get('/events/', function (req, res) {
+router.get('/events/', function (req, res, next) {
     Events.find(function (err, events) {
-        if (err) {
-            res.send(err);
-        }
+        if (err) return next(err);
         res.json(events);
     });
 });
 
-router.get('/events/types', function (req, res) {
+router.get('/events/types', auth, function (req, res, next) {
     Events.distinct('type', function (err, events) {
-        if (err) {
-            res.send(err);
-        }
+        if (err) return next(err);
         res.json(events);
     });
 })
 
 
-router.post('/events/', function (req, res) {
+router.post('/events/', auth, function (req, res, next) {
     var event = new Events();
 
     event.title = req.body.title;
@@ -61,24 +57,20 @@ router.post('/events/', function (req, res) {
     event.walk_id = req.body.walk_id;
 
     event.save(function (err) {
-        if (err) {
-            res.send(err);
-        }
+        if (err) return next(err);
         res.json(event);
     });
 });
 
-router.get('/events/:id', function (req, res) {
+router.get('/events/:id', auth, function (req, res, next) {
     Events.findById(req.params.id, function (err, event) {
-        if (err) res.send(err);
+        if (err) next(err);
         res.json(event);
     });
 })
-router.put('/events/:id', function (req, res) {
+router.put('/events/:id', auth, function (req, res, next) {
     Events.findById(req.params.id, function (err, event) {
-        if (err) {
-            res.send(err);
-        }
+        if (err) return next(err);
         event.title = req.body.title;
         event.type = req.body.type;
         event.start = req.body.start;
@@ -92,19 +84,55 @@ router.put('/events/:id', function (req, res) {
         };
         event.description = req.body.description;
         event.save(function (err) {
-            if (err) {
-                res.send(err);
-            }
+            if (err) return next(err);
             res.json(event);
         });
     });
 })
-router.delete('/events/:id', function (req, res) {
+router.delete('/events/:id', auth, function (req, res, next) {
 
     Events.remove({ _id: req.params.id }, function (err, event) {
+        if (err) return next(err);
+        res.json({ message: 'Successfully deleted' });
+    });
+
+});
+
+
+router.get('/emails/', auth, function (req, res, next) {
+    Emails.find(function (err, events) {
         if (err) {
-            res.send(err);
+            next(err);
         }
+        res.json(events);
+    });
+});
+
+
+router.post('/emails/', function (req, res, next) {
+    var email = new Emails();
+
+    email.name = req.body.name;
+    email.email = req.body.email;
+    email.firstname = req.body.firstname;
+    email.event = req.body.event;
+
+    email.save(function (err) {
+        if (err) return next(err);
+        res.json(email);
+    });
+});
+
+router.get('/emails/:email', function (req, res, next) {
+    Emails.find({ email: req.params.email }).populate('event', { _id: 1, title: 1}).exec(function (err, email) {
+        if (err) return next(err);
+        res.json(email);
+    });
+})
+
+router.delete('/emails/:id', function (req, res, next) {
+    Emails.remove({ _id: req.params.id }, function (err, event) {
+        if (err) return next(err);
         res.json({ message: 'Successfully deleted' });
     });
 

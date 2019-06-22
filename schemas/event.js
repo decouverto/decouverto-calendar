@@ -17,7 +17,5 @@ module.exports = new mongoose.Schema({
     is_located: Boolean,
     is_defined_end: Boolean,
     walk_id: String,
-    emails: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Email' }]
+    emails: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Emails' }]
 });
-
-/* TODO: add link to Découverto walk */

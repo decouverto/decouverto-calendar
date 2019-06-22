@@ -2,7 +2,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
 
     $scope.text = '';
 
-    $http.get('/api/events/' + $routeParams.id).success(function (event) {
+    $http.get('./api/events/' + $routeParams.id).success(function (event) {
 
         var text = event.title + '\n' + event.type + '\n';
 
