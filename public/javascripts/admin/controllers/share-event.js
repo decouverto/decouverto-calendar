@@ -15,8 +15,14 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
             return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
         }
 
+        function getDay(date) {
+            var h = date.getDate(),
+                m = date.getMonth();
+            return (h < 10 ? '0' : '') + h + '/' + (m < 10 ? '0' : '') + m;
+        } 
+
         var start = new Date(event.start);
-        text += '\nLe ' + weekdays[start.getDay()] + ' ' + start.getDate() + '/' + start.getMonth();
+        text += '\nLe ' + weekdays[start.getDay()] + ' ' + getDay(start);
 
         if (event.is_defined_end) {
             text += ' de ' + getHours(start) + ' à ';

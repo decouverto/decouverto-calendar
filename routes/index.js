@@ -3,9 +3,52 @@ var passport = require('passport');
 var router = express.Router();
 var auth = require('../policies/auth.js');
 
+var eventSchema = require('../schemas/event.js');
+
+var mongoose = require('mongoose');
+var connection = mongoose.createConnection('mongodb://localhost:27017/decouverto-calendar', { useNewUrlParser: true });
+
+var Events = connection.model('Events', eventSchema);
+
+function getHours(date) {
+    var h = date.getHours(),
+        m = date.getMinutes();
+    return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
+}
+
+function getDay(date) {
+    var h = date.getDate(),
+        m = date.getMonth();
+    return (h < 10 ? '0' : '') + h + '/' + (m < 10 ? '0' : '') + m;
+} 
+
+var weekdays = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
 /* GET home page */
 router.get('/', function (req, res) {
-    res.render('index');
+    Events.find({ start: { $gte: new Date() }}).sort({start: 'asc'}).exec(function (err, events) {
+        if (err) {
+            res.send(err);
+            res.locals.events = [];
+        } else {
+            for(var i=0; i<events.length; i++) {
+                var start = new Date(events[i].start);
+                var text = 'Le ' + weekdays[start.getDay()] + ' ' +  getDay(start);
+        
+                if (events[i].is_defined_end) {
+                    text += ' de ' + getHours(start) + ' à ';
+                    var end = new Date(events[i].end);
+                    text += getHours(end);
+                } else {
+                    text += ' à ' + getHours(start);
+                }
+                events[i].formatedDate = text
+            }
+            res.locals.events = events;
+        }
+        res.render('index');
+    });
+    
 });
 
 /* GET admin page */
