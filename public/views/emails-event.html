@@ -1,0 +1,27 @@
+<a class="btn" ng-click="$goTo('/list-events/')"><b>‹</b> Retour</a>
+<div ng-hide="can_subscribe">On ne peut pas s'inscrire à l'événement {{title}}</div>
+<div ng-show="can_subscribe">
+    <a class="btn" ng-click="copy()">Copier les emails</a>
+    <h2>Inscrits à l'événement "{{title}}"</h2>
+    <h3>Emails</h3>
+    <pre>{{text}}</pre>
+    <h3>Personnes</h3>
+    <table ng-show="emails">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+        </tr>
+        <tr ng-repeat="person in emails | orderBy: 'start'">
+            <td>
+                {{person.name}}
+            </td>
+            <td>
+                {{person.firstname}}
+            </td>
+            <td>
+                {{person.email}}
+            </td>
+        </tr>
+    </table>
+</div>

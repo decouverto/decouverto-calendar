@@ -126,7 +126,7 @@ router.post('/emails/', function (req, res, next) {
     email.event = req.body.event;
 
 
-    Events.findById(req.body.event, function (err, event) {
+    Events.findById(req.body.event, function (err, event) { // Vérifier ici que le couple event - email soit unique
         if (err) return next(err);
         event.emails.push(email);
 
