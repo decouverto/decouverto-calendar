@@ -57,23 +57,32 @@
                 <h2>Inscription</h2>
             </div>
             <div class="modal-body">
-                <p>Vous allez vous inscire à l'événement "<span id="event-choosed"></span>".</p>
-                <p>Vous pouvez vous désinscrire à tout moment.</p>
-                <form><div class="input-group">
-                    <label for="name-input">Nom:</label>
-                    <input type="text" id="name-input" placeholder="Nom" class="input">
+                <div id="default-modal-body"> 
+                    <p>Vous allez vous inscire à l'événement "<span id="event-choosed"></span>".</p>
+                    <p>Vous pouvez vous désinscrire à tout moment.</p>
+                    
+                    <form>
+                        <p class="warn" id="warn-form" style="display: none;">Le formulaire est invalide.</p>
+                        <div class="input-group">
+                            <label for="name-input">Nom:</label>
+                            <input type="text" id="name-input" placeholder="Nom" class="input">
+                        </div>
+                        <div class="input-group">
+                            <label for="firstname-input">Prénom:</label>
+                            <input type="text" id="firstname-input" placeholder="Prénom" class="input">
+                        </div>
+                        <div class="input-group">
+                            <label for="email-input">Email:</label>
+                            <input type="email" id="email-input" placeholder="Email" class="input">
+                        </div>
+                        <button class="subscribe" id="subscribe-btn">S'inscrire</button>
+                    </form>
+                    
+                    <p class="data-privacy">Vos données personnelles ne seront pas vendues et seront supprimées de nos serveurs une fois l'événement passé.</p>
                 </div>
-                <div class="input-group">
-                    <label for="firstname-input">Prénom:</label>
-                    <input type="text" id="firstname-input" placeholder="Prénom" class="input">
+                <div id="success-modal-body" style="display: none;">
+                    <p>Vous avez bien été inscrit.</p>
                 </div>
-                <div class="input-group">
-                    <label for="email-input">Email:</label>
-                    <input type="email" id="email-input" placeholder="Email" class="input">
-                </div>
-                <button class="subscribe" id="subscribe-btn">S'inscrire</button></form>
-                
-                <p class="data-privacy">Vos données personnelles ne seront pas vendues et seront supprimées de nos serveurs une fois l'événement passé.</p>
             </div>
         </div>
     </div>

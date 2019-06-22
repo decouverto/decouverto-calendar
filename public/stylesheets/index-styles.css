@@ -461,3 +461,7 @@ a {
     color: #888;
     font-style: italic; 
 }
+.warn {
+    color: #FF9800;
+    margin: 10px;
+}
