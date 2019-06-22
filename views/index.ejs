@@ -41,12 +41,42 @@
                             <a href="http://maps.google.com/?q=<%= events[i].location.lat %>,<%= events[i].location.long %>" target="_blank" title="Point de départ">S'y rendre</a>
                         <% } %>
                         <%if (events[i].can_subscribe) { %>
-                            <a class="subscribe">S'inscrire</a>
+                            <a class="subscribe subscribe-btn" eventid="<%= events[i].id %>" eventtitle="<%= events[i].title %>">S'inscrire</a>
                         <% } %>
                     </div>
             <% } %>
         <% } %>
     </section>
+
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Inscription</h2>
+            </div>
+            <div class="modal-body">
+                <p>Vous allez vous inscire à l'événement "<span id="event-choosed"></span>".</p>
+                <p>Vous pouvez vous désinscrire à tout moment.</p>
+                <form><div class="input-group">
+                    <label for="name-input">Nom:</label>
+                    <input type="text" id="name-input" placeholder="Nom" class="input">
+                </div>
+                <div class="input-group">
+                    <label for="firstname-input">Prénom:</label>
+                    <input type="text" id="firstname-input" placeholder="Prénom" class="input">
+                </div>
+                <div class="input-group">
+                    <label for="email-input">Email:</label>
+                    <input type="email" id="email-input" placeholder="Email" class="input">
+                </div>
+                <button class="subscribe" id="subscribe-btn">S'inscrire</button></form>
+                
+                <p class="data-privacy">Vos données personnelles ne seront pas vendues et seront supprimées de nos serveurs une fois l'événement passé.</p>
+            </div>
+        </div>
+    </div>
     <%- include('includes/footer'); %>
     <script type="text/javascript" src="/javascripts/index/build.js"></script>
 </body>
