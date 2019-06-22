@@ -33,6 +33,7 @@ var defaultBody = document.getElementById('default-modal-body');
 var successBody = document.getElementById('success-modal-body');
 var btn = document.getElementById('subscribe-btn');
 var warnForm = document.getElementById('warn-form');
+var errorForm = document.getElementById('error-form');
 
 var emailInput = document.getElementById('email-input');
 var firstnameInput = document.getElementById('firstname-input');
@@ -62,6 +63,7 @@ window.onload = function() {
             btn.style.display = 'block';
             successBody.style.display = 'none';
             warnForm.style.display = 'none';
+            errorForm.style.display = 'none';
             emailInput.value = '';
             firstnameInput.value = '';
             nameInput.value = '';
@@ -80,10 +82,14 @@ btn.onclick = function (e) {
         warnForm.style.display = 'block';
     } else {
         warnForm.style.display = 'none';
+        errorForm.style.display = 'none';
+        btn.style.display = 'none';
         postAjax('./api/emails', { email: emailInput.value, name: nameInput.value, firstname: firstnameInput.value, event: event }, function () {
-            console.log(event)
+            successBody.style.display = 'block';
+            defaultBody.style.display = 'none';
         }, function () {
-
+            errorForm.style.display = 'block';
+            btn.style.display = 'block';
         })
         
     }

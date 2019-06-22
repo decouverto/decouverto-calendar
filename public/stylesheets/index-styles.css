@@ -502,3 +502,7 @@ a {
     color: #FF9800;
     margin: 10px;
 }
+.error {
+    color: #FF0000;
+    margin: 10px;
+}
