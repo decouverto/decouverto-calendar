@@ -12,7 +12,7 @@ var connection = mongoose.createConnection('mongodb://localhost:27017/decouverto
 var Events = connection.model('Events', eventSchema);
 var Emails = connection.model('Emails', emailSchema);
 
-router.get('/events/', function (req, res, next) {
+router.get('/events/', auth, function (req, res, next) {
     Events.find(function (err, events) {
         if (err) return next(err);
         res.json(events);
@@ -67,7 +67,14 @@ router.get('/events/:id', auth, function (req, res, next) {
         if (err) next(err);
         res.json(event);
     });
-})
+});
+router.get('/events/:id/emails', auth, function (req, res, next) {
+    Events.findById(req.params.id).populate('emails', { _id: 0, name: 1, email: 1, firstname: 1}).exec(function (err, event) {
+        if (err) next(err);
+        res.json(event);
+    });
+});
+
 router.put('/events/:id', auth, function (req, res, next) {
     Events.findById(req.params.id, function (err, event) {
         if (err) return next(err);
@@ -89,8 +96,9 @@ router.put('/events/:id', auth, function (req, res, next) {
         });
     });
 })
-router.delete('/events/:id', auth, function (req, res, next) {
 
+router.delete('/events/:id', auth, function (req, res, next) {
+    /* Supprimer les mails associés */
     Events.remove({ _id: req.params.id }, function (err, event) {
         if (err) return next(err);
         res.json({ message: 'Successfully deleted' });
@@ -117,21 +125,32 @@ router.post('/emails/', function (req, res, next) {
     email.firstname = req.body.firstname;
     email.event = req.body.event;
 
-    email.save(function (err) {
+
+    Events.findById(req.body.event, function (err, event) {
         if (err) return next(err);
-        res.json(email);
+        event.emails.push(email);
+
+        event.save(function (err) {
+            if (err) return next(err);
+            email.save(function (err) {
+                if (err) return next(err);
+                res.json(email);
+            });
+        });
     });
+    
 });
 
-router.get('/emails/:email', function (req, res, next) {
+router.get('/emails/:email', auth, function (req, res, next) {
     Emails.find({ email: req.params.email }).populate('event', { _id: 1, title: 1}).exec(function (err, email) {
         if (err) return next(err);
         res.json(email);
     });
 })
 
-router.delete('/emails/:id', function (req, res, next) {
-    Emails.remove({ _id: req.params.id }, function (err, event) {
+router.delete('/emails/:id', auth, function (req, res, next) {
+    /* Supprimer le lien dans l'événement */
+    Emails.remove({ _id: req.params.id }, function (err) {
         if (err) return next(err);
         res.json({ message: 'Successfully deleted' });
     });

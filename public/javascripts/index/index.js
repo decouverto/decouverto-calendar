@@ -1,3 +1,14 @@
+var btnLeave = document.getElementById('btn-leave');
+var emailLeave = document.getElementById('email-leave');
+
+
+btnLeave.onclick = function (e) {
+    e.preventDefault();
+    if (emailLeave.value != '' && emailLeave.value.match(/@/)) {
+        window.open('./email/'+emailLeave.value, '_blank');
+    }
+}
+
 function postAjax(url, data, success, error) {
     var params = Object.keys(data).map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }).join('&');
 
