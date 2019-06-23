@@ -48,6 +48,16 @@ router.get('/', function (req, res) {
     
 });
 
+/* GET unsubscribe page */
+router.get('/email/:email', function (req, res) {
+    Emails.find({ email: req.params.email }).populate('event', { title: 1}).exec(function (err, email) {
+        if (err) return next(err);
+        res.locals.email = email;
+        res.render('email-page');
+    });
+});
+
+
 /* GET admin page */
 router.get('/admin', auth, function (req, res) {
     res.render('admin');

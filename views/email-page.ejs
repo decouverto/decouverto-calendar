@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Découverto | Calendrier - Se désinscrire</title>
+    <link rel="stylesheet" href="../stylesheets/index-styles.min.css" />
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="theme-color" content="#dc3133">
+    <meta name="msapplication-navbutton-color" content="#dc3133">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="description" content="Calendrier des prochains événements de l'association Découverto">
+    <meta name="image" content="https://decouverto.fr/icons/512.png">
+    <meta itemprop="name" content="Découverto | Calendrier - Se désinscrire">
+    <meta itemprop="description" content="Calendrier des prochains événements de l'association Découverto">
+    <meta itemprop="image" content="https://decouverto.fr/icons/512.png">
+    <meta name="og:title" content="Découverto | Calendrier - Se désinscrire">
+    <meta name="og:description" content="Calendrier des prochains événements de l'association Découverto">
+    <meta name="og:url" content="https://decouverto.fr/calendrier/">
+    <meta name="og:site_name" content="Découverto">
+    <meta name="og:locale" content="fr_FR">
+    <meta name="fb:admins" content="1803338833217763">
+    <meta name="og:type" content="website">
+</head>
+<body>
+    <header>
+        <h1>Découverto</h1><a href="/calendrier/">Accueil</a>
+    </header>
+    <section class="content">
+        <h2>Événements auquels vous êtes inscrits</h2>
+        <%if (email.length == 0) { %>
+            <p>Vous êtes inscrits à aucun événement.</p>
+        <% } else { %>
+            <% for(var i=0; i<email.length; i++) {%>
+                    <div class="card events" >
+                        <h4 class="title"><%= email[i].event.title %></h4>
+                        <a class="subscribe subscribe-btn" href="../unsubscribe/<%= email[i].id %>">Se désinscrire</a>
+                    </div>
+            <% } %>
+        <% } %>
+    </section>
+
+    <%- include('includes/footer'); %>
+</body>
+</html>
