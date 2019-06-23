@@ -2,15 +2,11 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../policies/auth.js');
-var eventSchema = require('../schemas/event.js');
-var emailSchema = require('../schemas/email.js');
 
+var connections = require('../lib/connections.js');
+var Events = connections.Events;
+var Emails = connections.Emails;
 
-var mongoose = require('mongoose');
-var connection = mongoose.createConnection('mongodb://localhost:27017/decouverto-calendar', { useNewUrlParser: true });
-
-var Events = connection.model('Events', eventSchema);
-var Emails = connection.model('Emails', emailSchema);
 
 router.get('/events/', auth, function (req, res, next) {
     Events.find(function (err, events) {
