@@ -11,6 +11,7 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Email</th>
+            <th>Actions</th>
         </tr>
         <tr ng-repeat="person in emails | orderBy: 'start'">
             <td>
@@ -21,6 +22,9 @@
             </td>
             <td>
                 {{person.email}}
+            </td>
+            <td>
+                <a class="icon-trash clickable" ng-click="removeUser(person._id)"></a>
             </td>
         </tr>
     </table>

@@ -9,7 +9,6 @@ var rename = require('gulp-rename');
 var csso = require('gulp-csso');
 var autoprefixer = require('gulp-autoprefixer');
 var through = require('through');
-var htmlmin = require('gulp-htmlmin');
 
 var isDist = process.argv.indexOf('serve') === -1;
 
@@ -73,10 +72,25 @@ gulp.task('js-index-watch', ['js-index'], function (done) {
     browserSync.reload();
     done();
 });
-gulp.task('js-admin-watch', ['js-admin'], function (done) {
+
+gulp.task('js-admin-dev', function () {
+    var b = browserify({
+      entries: 'public/javascripts/admin/index.js',
+      debug: true
+    });
+  
+    return b.bundle()
+      .pipe(source('public/javascripts/admin/index.js'))
+      .pipe(buffer())
+        .on('error', log.error)
+      .pipe(rename('build.js'))
+      .pipe(gulp.dest('public/javascripts/admin/'));
+});
+gulp.task('js-admin-watch', ['js-admin-dev'], function (done) {
     browserSync.reload();
     done();
 });
+
 gulp.task('js-preview-watch', ['js-preview'], function (done) {
     browserSync.reload();
     done();

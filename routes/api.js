@@ -66,7 +66,7 @@ router.get('/events/:id', auth, function (req, res, next) {
     });
 });
 router.get('/events/:id/emails', auth, function (req, res, next) {
-    Events.findById(req.params.id).populate('emails', { _id: 0, name: 1, email: 1, firstname: 1}).exec(function (err, event) {
+    Events.findById(req.params.id).populate('emails', { name: 1, email: 1, firstname: 1}).exec(function (err, event) {
         if (err) next(err);
         res.json(event);
     });

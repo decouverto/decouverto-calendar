@@ -2,19 +2,22 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
 
     $scope.text = '';
 
-    $http.get('./api/events/' + $routeParams.id + '/emails').success(function (event) {
-        $scope.title = event.title;
-        $scope.emails= event.emails;
-        $scope.can_subscribe = event.can_subscribe;
+    function generateText(emails) {
         var text = '';
 
-        event.emails.forEach(function (el) {
+        emails.forEach(function (el) {
             text += el.email + ',\n'
         });
         text = text.replace(/,\s*$/, '');
 
         $scope.text = text;
+    }
 
+    $http.get('./api/events/' + $routeParams.id + '/emails').success(function (event) { 
+        $scope.title = event.title;
+        $scope.emails= event.emails;
+        $scope.can_subscribe = event.can_subscribe;
+        generateText(event.emails);
     }).error($rootScope.$error);
 
     $scope.copy = function () {
@@ -37,5 +40,19 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
             document.getSelection().addRange(selected);
         }
         notie.alert(1, 'Le texte a été copié.', 3);
+    };
+
+    $scope.removeUser = function (id) {
+        notie.confirm('Êtes-vous sûre de vouloir supprimer cette inscription ?', 'Oui', 'Annuler', function() {
+            $http.delete('/api/emails/' + id).success(function() {
+                notie.alert(1, 'L\'inscription a été supprimée avec succès.', 3);
+                for(var i = $scope.emails.length - 1; i >= 0; i--) {
+                    if($scope.emails[i]._id == id) {
+                        $scope.emails.splice(i, 1);
+                    }
+                }
+                generateText($scope.emails);
+            }).error($rootScope.$error);
+        });
     };
 }];

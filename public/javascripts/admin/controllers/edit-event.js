@@ -17,7 +17,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
             start: new Date(event.start),
             is_defined_end: event.is_defined_end,
             end: new Date(),
-            can_subscribe: false,
+            can_subscribe: event.can_subscribe,
             is_located: event.is_located,
             lat: 0,
             long: 0,
