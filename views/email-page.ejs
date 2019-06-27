@@ -27,13 +27,19 @@
     </header>
     <section class="content">
         <h2>Événements auquels vous êtes inscrits</h2>
+        <% if ( error.length > 0 ) { %>
+            <p class="error-box"><%= error %> </p>
+        <% } %>
+        <% if ( success.length > 0 ) { %>
+            <p class="success-box"><%= success %> </p>
+        <% } %>
         <%if (email.length == 0) { %>
             <p>Vous êtes inscrits à aucun événement.</p>
         <% } else { %>
             <% for(var i=0; i<email.length; i++) {%>
                     <div class="card events" >
                         <h4 class="title"><%= email[i].event.title %></h4>
-                        <a class="subscribe subscribe-btn" href="../unsubscribe/<%= email[i].id %>">Se désinscrire</a>
+                        <a class="subscribe subscribe-btn" href="../email/<%= email[i].email %>/<%= email[i].id %>">Se désinscrire</a>
                     </div>
             <% } %>
         <% } %>
