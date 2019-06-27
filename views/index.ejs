@@ -42,7 +42,11 @@
                             <a href="http://maps.google.com/?q=<%= events[i].location.lat %>,<%= events[i].location.long %>" target="_blank" title="Point de départ">S'y rendre</a>
                         <% } %>
                         <%if (events[i].can_subscribe) { %>
-                            <a class="subscribe subscribe-btn" eventid="<%= events[i].id %>" eventtitle="<%= events[i].title %>">S'inscrire</a>
+                            <%if (events[i].number_limit != events[i].emails.length) { %>
+                                <a class="subscribe subscribe-btn" eventid="<%= events[i].id %>" eventtitle="<%= events[i].title %>">S'inscrire</a>
+                            <% } else { %>
+                                <p class="event_full">Plus de place disponible.</p>
+                            <% } %>
                         <% } %>
                     </div>
             <% } %>
@@ -64,7 +68,7 @@
                     
                     <form>
                         <p class="warn" id="warn-form" style="display: none;">Le formulaire est invalide.</p>
-                        <p class="error" id="error-form" style="display: none;">Une erreur est survenue.</p>
+                        <p class="error" id="error-form" style="display: none;">Une erreur est survenue. Il se peut que vous soyez déjà inscrit ou que trop de personnes soient inscrites.</p>
                         <div class="input-group">
                             <label for="name-input">Nom:</label>
                             <input type="text" id="name-input" placeholder="Nom" class="input">

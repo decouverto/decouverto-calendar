@@ -120,6 +120,7 @@ router.get('/emails/', auth, function (req, res, next) {
 });
 
 
+
 router.post('/emails/', function (req, res, next) {
     var email = new Emails();
 
@@ -128,18 +129,24 @@ router.post('/emails/', function (req, res, next) {
     email.firstname = req.body.firstname;
     email.event = req.body.event;
 
-
-    Events.findById(req.body.event, function (err, event) { // Vérifier ici que le couple event - email soit unique
+    Events.findById(req.body.event).populate('emails', { _id: 0, email: 1}).exec(function (err, event) { // Vérifier ici que le couple event - email soit unique
         if (err) return next(err);
-        event.emails.push(email);
+        if (Array.from(event.emails, x => x.email).includes(email.email) || event.emails.length == event.number_limit) {
+            err = new Error('Cannot subscribe');
+            err.status = 403;
+            next(err);
+        } else {
+            event.emails.push(email);
 
-        event.save(function (err) {
-            if (err) return next(err);
-            email.save(function (err) {
+            event.save(function (err) {
                 if (err) return next(err);
-                res.json(email);
+                email.save(function (err) {
+                    if (err) return next(err);
+                    res.json(email);
+                });
             });
-        });
+        }
+        
     });
     
 });

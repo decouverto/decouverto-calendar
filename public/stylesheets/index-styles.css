@@ -535,3 +535,8 @@ a {
     color: #FF0000;
     margin: 10px;
 }
+
+.event_full {
+    font-style: italic;
+    color: #34495e;
+}
