@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../policies/auth.js');
+var each = require('async-each');
 
 var connections = require('../lib/connections.js');
 var Events = connections.Events;
@@ -94,12 +95,18 @@ router.put('/events/:id', auth, function (req, res, next) {
 })
 
 router.delete('/events/:id', auth, function (req, res, next) {
-    /* Supprimer les mails associés */
-    Events.remove({ _id: req.params.id }, function (err, event) {
-        if (err) return next(err);
-        res.json({ message: 'Successfully deleted' });
+    Events.findById(req.params.id, function (err, event) {
+        if (err) next(err);
+        each(event.emails, function(email, callback) {
+            Emails.remove({ _id: email }, callback);
+        }, function(err) {
+            if (err) next(err);
+            Events.remove({ _id: req.params.id }, function (err, event) {
+                if (err) return next(err);
+                res.json({ message: 'Successfully deleted' });
+            });
+        });
     });
-
 });
 
 
@@ -142,15 +149,35 @@ router.get('/emails/:email', auth, function (req, res, next) {
         if (err) return next(err);
         res.json(email);
     });
-})
+});
+
+var arrayRemove = function (arr, value) {
+    return arr.filter(function(ele){
+        return ele != value;
+    });
+};
 
 router.delete('/emails/:id', auth, function (req, res, next) {
-    /* Supprimer le lien dans l'événement */
-    Emails.remove({ _id: req.params.id }, function (err) {
+    /* Check if email still exists */
+    Emails.findById(req.params.id, function (err, email) {
         if (err) return next(err);
-        res.json({ message: 'Successfully deleted' });
-    });
+        
+        /* Look for event */
+        Events.findById(email.event, function (err, event) {
+            if (err) return next(err);
+            /* Unlike event */
+            event.emails = arrayRemove(event.emails, req.params.id);
+            event.save(function (err) {
+                if (err) return next(err);
 
+                /* Remove email */
+                Emails.remove({ _id: req.params.id }, function (err) {
+                    if (err) return next(err);
+                    res.json({ message: 'Successfully deleted' });
+                });
+            });
+        });
+    });
 });
 
 module.exports = router;

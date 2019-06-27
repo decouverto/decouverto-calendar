@@ -62,13 +62,13 @@ router.get('/email/:email', function (req, res) {
 var errorUnsubscribe = function (req, res) {
     req.flash('error', 'Une erreur a été rencontrée.');
     res.redirect('/email/' + req.params.email);
-}
+};
 
 var arrayRemove = function (arr, value) {
     return arr.filter(function(ele){
         return ele != value;
     });
-}
+};
 
 router.get('/email/:email/:id', function (req, res) {
     /* Check if email still exists */
