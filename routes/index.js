@@ -84,7 +84,7 @@ router.get('/email/:email/:id', function (req, res) {
                 if (err) return errorUnsubscribe(req, res);
 
                 /* Remove email */
-                Emails.remove({ _id: req.params.id }, function (err) {
+                Emails.deleteOne({ _id: req.params.id }, function (err) {
                     if (err) return errorUnsubscribe(req, res);
                     req.flash('success', 'Vous avez été désinscrits de l\'événement "' + event.title + '".');
                     res.redirect('/email/' + req.params.email);

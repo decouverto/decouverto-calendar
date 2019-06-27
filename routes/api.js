@@ -98,10 +98,10 @@ router.delete('/events/:id', auth, function (req, res, next) {
     Events.findById(req.params.id, function (err, event) {
         if (err) next(err);
         each(event.emails, function(email, callback) {
-            Emails.remove({ _id: email }, callback);
+            Emails.deleteOne({ _id: email }, callback);
         }, function(err) {
             if (err) next(err);
-            Events.remove({ _id: req.params.id }, function (err, event) {
+            Events.deleteOne({ _id: req.params.id }, function (err, event) {
                 if (err) return next(err);
                 res.json({ message: 'Successfully deleted' });
             });
@@ -171,7 +171,7 @@ router.delete('/emails/:id', auth, function (req, res, next) {
                 if (err) return next(err);
 
                 /* Remove email */
-                Emails.remove({ _id: req.params.id }, function (err) {
+                Emails.deleteOne({ _id: req.params.id }, function (err) {
                     if (err) return next(err);
                     res.json({ message: 'Successfully deleted' });
                 });
