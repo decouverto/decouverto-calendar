@@ -540,3 +540,8 @@ a {
     font-style: italic;
     color: #34495e;
 }
+.red-border {
+    border-color: #c0392b;
+    border-width: 2px;
+    border-style: solid;
+}

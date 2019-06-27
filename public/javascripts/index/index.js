@@ -53,6 +53,29 @@ window.onclick = function(e) {
 
 var event = '';
 
+function animate(elem, style, unit, from, to, time, prop) {
+    if (!elem) {
+        return;
+    }
+    var start = new Date().getTime(),
+        timer = setInterval(function () {
+            var step = Math.min(1, (new Date().getTime() - start) / time);
+            if (prop) {
+                elem[style] = (from + step * (to - from))+unit;
+            } else {
+                elem.style[style] = (from + step * (to - from))+unit;
+            }
+            if (step === 1) {
+                clearInterval(timer);
+            }
+        }, 25);
+    if (prop) {
+          elem[style] = from+unit;
+    } else {
+          elem.style[style] = from+unit;
+    }
+}
+
 window.onload = function() {
     var anchors = document.getElementsByClassName('subscribe-btn');
     for(var i = 0; i < anchors.length; i++) {
@@ -70,6 +93,14 @@ window.onload = function() {
             event = this.getAttribute('eventid');
             document.getElementById('event-choosed').innerText = this.getAttribute('eventtitle')
         }
+    }
+    var id = window.location.hash.substr(1).replace('/', '');
+    try {
+        var selected = document.getElementById(id)
+        selected.classList.add('red-border');
+        animate(document.scrollingElement || document.documentElement, "scrollTop", "", 0, selected.offsetTop, 500, true);
+    } catch(e) {
+        
     }
 }
 
