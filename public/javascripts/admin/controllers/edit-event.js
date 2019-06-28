@@ -53,7 +53,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
             }
             $scope.invalid = invalid;
         };
-        $scope.invalid = true;
+        $scope.invalid = false;
     }).error($rootScope.$error);
 
     $scope.invalidForm = function () {

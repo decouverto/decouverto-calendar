@@ -48,7 +48,7 @@
     </label>
     <div ng-show="event.can_subscribe">
         <h4>Nombre de place</h4>
-        <input type="number" step="1" ng-model="event.number_limit" ng-keyup="invalidForm()">
+        <input type="number" step="1" ng-model="event.number_limit" ng-change="invalidForm()">
     </div>
     <hr>
     <h4>Id de la randonnée associée (optionnel)</h4>

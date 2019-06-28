@@ -1,4 +1,4 @@
-module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', function ($scope, $http, $rootScope, notie, $routeParams, $location) {
+module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', function ($scope, $http, $rootScope, notie, $location) {
     $scope.tinymceOptions = {
         inline: false,
         skin: 'lightgray',
@@ -73,10 +73,10 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
 
     $scope.publish = function () {
         $scope.progress = true
-        $http.post('./api/events/', $scope.event).success(function () {
+        $http.post('./api/events/', $scope.event).success(function (data) {
             notie.alert(1, 'L\'événement a été ajouté.', 3);
             $scope.progress = false;
-            $location.path('/list-events/');
+            $location.path('/share-event/' + data._id);
         }).error(function () {
             $rootScope.$error();
             $scope.progress = false;
