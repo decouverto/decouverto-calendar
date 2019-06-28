@@ -41,6 +41,9 @@ app.run(['$rootScope', '$location', 'notie', function ($rootScope, $location,  n
     $rootScope.$error = function () { // Send message error
         notie.alert(3, 'Une erreur est survenue.', 3);
     }
+    $rootScope.$goTo = function (path) {
+        $location.path(path);
+    }
 }]);
 app.controller('HomeCtrl', require('./controllers/home.js'));
 app.controller('PublishCtrl', require('./controllers/publish.js'));
