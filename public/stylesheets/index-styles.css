@@ -451,6 +451,33 @@ a {
     }
 }
 
+@media (max-width: 450px) {
+    header {
+        padding: 2rem;
+    }
+    header h1 {
+        font-size: 2em;
+    }
+    header a {
+        font-size: 1.7em;
+    }
+    .card h4 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 450px) {
+    header {
+        padding: 1.5rem;
+    }
+    header h1 {
+        font-size: 1.2em;
+    }
+    header a {
+        font-size: 1.1em;
+    }
+}
+
 @-webkit-keyframes animatetop {
     from {
         top: -300px;
