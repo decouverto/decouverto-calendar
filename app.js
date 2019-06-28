@@ -37,7 +37,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
 
-app.use(flash());
+app.use('/', require('./routes/index'));
+
 app.use(session({
     secret: 'calendar website of the Découverto organization',
     name: 'decouverto-calendar-session',
@@ -49,12 +50,15 @@ app.use(session({
         collection: 'sessions'
     })
 }));
+app.use(flash());
+
+app.use('/email/', require('./routes/email'));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', require('./routes/index'));
 app.use('/api/', require('./routes/api'));
+app.use('/admin/', require('./routes/admin'));
 
 // user collection 
 var mongoose = require('mongoose');
