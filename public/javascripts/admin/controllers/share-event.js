@@ -70,9 +70,9 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
 
         /* Lien */
         if (event.can_subscribe) {
-            text += '\n\nInscription sur: https://decouverto.fr/calendrier/#/' + $routeParams.id;
+            text += '\n\nInscription sur: https://calendrier.decouverto.fr/#/' + $routeParams.id;
         } else {
-            text += '\n\nPlus de détails sur: https://decouverto.fr/calendrier/#/' + $routeParams.id;
+            text += '\n\nPlus de détails sur: https://calendrier.decouverto.fr/#/' + $routeParams.id;
         }
 
         $scope.text = text;

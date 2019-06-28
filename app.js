@@ -40,7 +40,7 @@ app.use(helmet());
 app.use(flash());
 app.use(session({
     secret: 'calendar website of the Découverto organization',
-    name: 'decouverto-session',
+    name: 'decouverto-calendar-session',
     proxy: false,
     resave: true,
     saveUninitialized: true,
