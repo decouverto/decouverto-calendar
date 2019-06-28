@@ -41,6 +41,9 @@
                             <p><b>Lieu:</b> <%=events[i].location.name %></p>
                             <a href="http://maps.google.com/?q=<%= events[i].location.lat %>,<%= events[i].location.long %>" target="_blank" title="Point de départ">S'y rendre</a>
                         <% } %>
+                        <%if (events[i].walk_id != '') { %>
+                            <a href="https://decouverto.fr/rando/<%= events[i].walk_id %>" target="_blank">Balade associée</a>
+                        <% } %>
                         <%if (events[i].can_subscribe) { %>
                             <%if (events[i].number_limit != events[i].emails.length) { %>
                                 <a class="subscribe subscribe-btn" eventid="<%= events[i].id %>" eventtitle="<%= events[i].title %>">S'inscrire</a>
@@ -70,12 +73,12 @@
                         <p class="warn" id="warn-form" style="display: none;">Le formulaire est invalide.</p>
                         <p class="error" id="error-form" style="display: none;">Une erreur est survenue. Il se peut que vous soyez déjà inscrit ou que trop de personnes soient inscrites.</p>
                         <div class="input-group">
-                            <label for="name-input">Nom:</label>
-                            <input type="text" id="name-input" placeholder="Nom" class="input">
-                        </div>
-                        <div class="input-group">
                             <label for="firstname-input">Prénom:</label>
                             <input type="text" id="firstname-input" placeholder="Prénom" class="input">
+                        </div>
+                        <div class="input-group">
+                            <label for="name-input">Nom:</label>
+                            <input type="text" id="name-input" placeholder="Nom" class="input">
                         </div>
                         <div class="input-group">
                             <label for="email-input">Email:</label>

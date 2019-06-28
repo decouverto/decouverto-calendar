@@ -39,6 +39,26 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
             html = html.replace(/<em>/g, '');
             html = html.replace(/<\/em>/g, '');
             html = html.replace(/(<([^>]+)>)/ig, '\n');
+            html = html.replace(/&egrave;/g, 'è');
+            html = html.replace(/&eacute;/g, 'é');
+            html = html.replace(/&ecirc;/g, 'ê');
+            html = html.replace(/&euml;/g, 'ë');
+            
+            html = html.replace(/&agrave;/g, 'à');
+            html = html.replace(/&acirc;/g, 'ä');
+            html = html.replace(/&auml;/g, 'â');
+            
+            html = html.replace(/&ograve;/g, 'ò');
+            html = html.replace(/&ocirc;/g, 'ô');
+            html = html.replace(/&ouml;/g, 'ö');
+            
+            html = html.replace(/&igrave;/g, 'ì');
+            html = html.replace(/&icirc;/g, 'î');
+            html = html.replace(/&iuml;/g, 'ï');
+            
+            html = html.replace(/&ugrave;/g, 'ù');
+            html = html.replace(/&uuml;/g, 'ü');
+            html = html.replace(/&ucirc;/g, 'û');
             return html;
         }
         text += '\n\n' + strip(event.description);
