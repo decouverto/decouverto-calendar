@@ -48,11 +48,11 @@ header a:hover {
     color: #a52222;
 }
 
-header,
 section,
 main {
     padding: 3rem;
 }
+
 
 article,
 aside,
@@ -332,39 +332,11 @@ a {
 
 
 
-@media (max-width: 1000px) {
-    .banner {
-        flex-direction: column;
-    }
-
-    .banner>div {
-        width: 100%;
-        text-align: center;
-    }
-
-    header.home h1 {
-        font-size: 3rem;
-    }
-
-    h1,
-    header.home h2 {
-        text-align: center;
-        max-width: none;
-        font-size: 1.5rem;
-    }
-}
 
 @media (max-width: 600px) {
     h2 {
         font-size: 3rem;
         font-weight: bold;
-    }
-
-    .howto-step {
-        overflow: hidden;
-        min-width: 0;
-        flex-basis: 100%;
-        padding: 0;
     }
 }
 
@@ -412,10 +384,6 @@ a {
     color: #fff
 }
 
-.map {
-    height: 500px;
-    width: 100%;
-}
 
 .modal {
     display: none;
@@ -451,20 +419,6 @@ a {
     }
 }
 
-@media (max-width: 450px) {
-    header {
-        padding: 2rem;
-    }
-    header h1 {
-        font-size: 2em;
-    }
-    header a {
-        font-size: 1.7em;
-    }
-    .card h4 {
-        font-size: 1.6rem;
-    }
-}
 
 @media (max-width: 450px) {
     header {
@@ -475,6 +429,9 @@ a {
     }
     header a {
         font-size: 1.1em;
+    }
+    .card h4 {
+        font-size: 1.6rem;
     }
 }
 
