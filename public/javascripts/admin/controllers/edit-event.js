@@ -28,7 +28,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
         };
         if (event.is_located) {
             $scope.event.lat = event.location.lat
-            $scope.event.long = event.location.lat
+            $scope.event.long = event.location.long
             $scope.event.location_name = event.location.name
         }
         if (event.is_defined_end) {
