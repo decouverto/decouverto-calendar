@@ -13,7 +13,7 @@ function getHours(date) {
 
 function getDay(date) {
     var h = date.getDate(),
-        m = date.getMonth();
+        m = date.getMonth()+1;
     return (h < 10 ? '0' : '') + h + '/' + (m < 10 ? '0' : '') + m;
 } 
 
