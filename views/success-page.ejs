@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <h1>Decouverto</h1>
+    <a href="/admin/logout" class="logout"><i class="icon-power"></i> Se déconnecter</a>
+    <h1>Decouverto - Calendrier</h1>
     <h2>
     <%if (success == 'user-saved') { %>
       Le nouvel utilisateur a été crée.
@@ -18,10 +19,5 @@
       L'utilisateur a été modifié.
     <% } %>
     </h2>
-    <p class="footer">
-      <a href="/admin/"><i class="icon-home"></i> Accueil</a>
-      <a href="/admin/users/"><i class="icon-users"></i> Liste des utilisateurs</a>
-      <a href="/admin/logout"><i class="icon-power"></i> Se déconnecter</a>
-    </p>
   </body>
 </html>

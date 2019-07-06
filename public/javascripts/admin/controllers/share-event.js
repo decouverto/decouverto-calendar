@@ -100,6 +100,10 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
         }
         notie.alert(1, 'Le texte a été copié.', 3);
     };
+
+    $scope.publishFacebook = function () {
+        window.open('/admin/publish-post/#'+encodeURIComponent($scope.text),'_blank');
+    }
 }
 
 ];

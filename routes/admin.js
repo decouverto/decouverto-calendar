@@ -29,4 +29,10 @@ router.get('/logout', function (req, res) {
     res.redirect('/admin');
 });
 
+
+/* GET publish post page */
+router.get('/publish-post', auth, function (req, res) {
+    res.render('publish-post');
+});
+
 module.exports = router;
