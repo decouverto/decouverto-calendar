@@ -10,41 +10,45 @@
   <a href="/admin/logout" class="logout"><i class="icon-power"></i> Se déconnecter</a>
   <h1>Decouverto - Calendrier</h1>
   <h2>Publication sur facebook</h2>
-  <div id="log">
-  </div>
+  <pre id="message-preview"></pre>
+  <div id="fb-root"></div>
+  <p>Publier ce texte sur la page Facebook Découverto:</p>
+  <div class="fb-login-button" data-width="" data-size="large" onlogin="publish" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+  <p id="log">
+  </p>
   <script>
+    var logDiv = document.getElementById('log');
+    var message = decodeURIComponent(window.location.hash.substr(1));
+    document.getElementById('message-preview').innerHTML = message;
+
     function addText(log) {
-      var div = document.getElementById('log');
-      div.innerHTML += log + '<br>';
+      logDiv.innerHTML += log + '<br>';
     }
+
     var pageId = '1803338833217763';
+
+    function publish () {
+      FB.api('/me', function (response) {
+        FB.api('/' + pageId + '?fields=access_token', function (response) {
+          console.log(response)
+          FB.api('/' + pageId + '/feed', 'post', {
+            access_token: response.access_token,
+            message: message
+           }, function (response) {
+            console.log(response)
+            addText('Le texte a été publié.');
+            window.open('https://www.facebook.com/' + response.id, '_blank');
+          });
+        });
+      });
+    }
+
     window.fbAsyncInit = function () {
       FB.init({
         appId: '2379880765629695',
         autoLogAppEvents: true,
         xfbml: true,
         version: 'v3.3'
-      });
-      FB.login(function (response) {
-        if (response.authResponse) {
-          addText('Connection...');
-          FB.api('/me', function (response) {
-            addText('Bonjour  ' + response.name);
-            FB.api('/' + pageId + '?fields=access_token', function (response) {
-              console.log(response)
-              FB.api('/' + pageId + '/feed', 'post', {
-                access_token: response.access_token,
-                message: decodeURIComponent(window.location.hash.substr(1))
-              }, function (response) {
-                console.log(response)
-                addText('Le texte a été publié.');
-                window.open('https://www.facebook.com/' + response.id, '_blank');
-              });
-            });
-          });
-        } else {
-          addText('Une erreur est survenue.');
-        }
       });
     };
   </script>
