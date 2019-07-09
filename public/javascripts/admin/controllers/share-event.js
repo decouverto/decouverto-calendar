@@ -1,6 +1,7 @@
 module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$document', function ($scope, $http, $rootScope, notie, $routeParams, $document) {
 
     $scope.text = '';
+    $scope.title = '';
 
     $http.get('./api/events/' + $routeParams.id).success(function (event) {
 
@@ -102,7 +103,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
     };
 
     $scope.publishFacebook = function () {
-        window.open('/admin/publish-post/#'+encodeURIComponent($scope.text),'_blank');
+        window.open('/admin/publish-post/#'+encodeURIComponent($scope.title),'_blank');
     }
 }
 

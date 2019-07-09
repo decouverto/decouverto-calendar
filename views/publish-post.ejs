@@ -9,45 +9,35 @@
 <body>
   <a href="/admin/logout" class="logout"><i class="icon-power"></i> Se déconnecter</a>
   <h1>Decouverto - Calendrier</h1>
-  <h2>Publication sur facebook</h2>
-  <div id="log">
-  </div>
+  <h2>Publication sur Facebook</h2>
+  
+  <canvas id="canvas" width="1024" height="128" onClick="download()"></canvas>
   <script>
-    function addText(log) {
-      var div = document.getElementById('log');
-      div.innerHTML += log + '<br>';
-    }
-    var pageId = '1803338833217763';
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: '2379880765629695',
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: 'v3.3'
-      });
-      FB.login(function (response) {
-        if (response.authResponse) {
-          addText('Connection...');
-          FB.api('/me', function (response) {
-            addText('Bonjour  ' + response.name);
-            FB.api('/' + pageId + '?fields=access_token', function (response) {
-              console.log(response)
-              FB.api('/' + pageId + '/feed', 'post', {
-                access_token: response.access_token,
-                message: decodeURIComponent(window.location.hash.substr(1))
-              }, function (response) {
-                console.log(response)
-                addText('Le texte a été publié.');
-                window.open('https://www.facebook.com/' + response.id, '_blank');
-              });
-            });
-          });
-        } else {
-          addText('Une erreur est survenue.');
-        }
-      });
+    window.onload = function(){
+     var text = decodeURIComponent(window.location.hash.substr(1))
+     var canvas = document.getElementById('canvas');
+     var context = canvas.getContext('2d');
+     var imageObj = new Image();
+     imageObj.onload = function(){
+         context.drawImage(imageObj, 0, 0, 1024, 128);
+         context.fillStyle = '#fff';
+         context.strokeStyle = '#fff';
+         
+         if (text.length > 55) {
+           context.font = '25px Calibri';
+         } else {
+           context.font = '30px Calibri';
+         }
+         context.fillText(text, 25, 100);
+     };
+     imageObj.src = '/banner.png'; 
     };
+    var download = function(){
+      var link = document.createElement('a');
+      link.download = 'event.png';
+      link.href = document.getElementById('canvas').toDataURL();
+      link.click();
+    }
   </script>
-  <script async defer src="https://connect.facebook.net/fr_FR/sdk.js"></script>
 </body>
 </html>
