@@ -18,9 +18,9 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
 
         function getDay(date) {
             var h = date.getDate(),
-                m = date.getMonth()+1;
+                m = date.getMonth() + 1;
             return (h < 10 ? '0' : '') + h + '/' + (m < 10 ? '0' : '') + m;
-        } 
+        }
 
         var start = new Date(event.start);
         text += '\nLe ' + weekdays[start.getDay()] + ' ' + getDay(start);
@@ -44,19 +44,19 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
             html = html.replace(/&eacute;/g, 'é');
             html = html.replace(/&ecirc;/g, 'ê');
             html = html.replace(/&euml;/g, 'ë');
-            
+
             html = html.replace(/&agrave;/g, 'à');
             html = html.replace(/&acirc;/g, 'ä');
             html = html.replace(/&auml;/g, 'â');
-            
+
             html = html.replace(/&ograve;/g, 'ò');
             html = html.replace(/&ocirc;/g, 'ô');
             html = html.replace(/&ouml;/g, 'ö');
-            
+
             html = html.replace(/&igrave;/g, 'ì');
             html = html.replace(/&icirc;/g, 'î');
             html = html.replace(/&iuml;/g, 'ï');
-            
+
             html = html.replace(/&ugrave;/g, 'ù');
             html = html.replace(/&uuml;/g, 'ü');
             html = html.replace(/&ucirc;/g, 'û');
@@ -77,6 +77,26 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
         }
 
         $scope.text = text;
+
+
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var imageObj = new Image();
+        imageObj.onload = function () {
+            context.drawImage(imageObj, 0, 0, 1024, 128);
+            context.fillStyle = '#fff';
+            context.strokeStyle = '#fff';
+
+            if (event.title.length > 55) {
+                context.font = '25px Calibri';
+            } else if (event.title.length <= 20) {
+                context.font = '50px Calibri';
+            } else {
+                context.font = '30px Calibri';
+            }
+            context.fillText(event.title, 25, 100);
+        };
+        imageObj.src = '/banner.png';
 
     }).error($rootScope.$error);
 
@@ -102,9 +122,11 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
         notie.alert(1, 'Le texte a été copié.', 3);
     };
 
-    $scope.publishFacebook = function () {
-        window.open('/admin/publish-post/#'+encodeURIComponent($scope.title),'_blank');
-    }
-}
 
-];
+    $scope.download = function () {
+        var link = document.createElement('a');
+        link.download = 'event.png';
+        link.href = document.getElementById('canvas').toDataURL();
+        link.click();
+    }
+}];
