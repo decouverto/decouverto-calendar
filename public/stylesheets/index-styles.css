@@ -16,8 +16,7 @@ body {
     box-sizing: border-box;
 }
 
-
-header {
+header.unsubscribe {
     flex-shrink: 0;
     overflow: hidden;
     background-size: 100%;
@@ -28,25 +27,77 @@ header {
     line-height: 66px;
 }
 
-header h1 {
+header.unsubscribe h1 {
     margin: 0;
     padding-left: 10px;
-    font-size: 2.2em;
+    font-size: 2em;
     display: inline-block;
 }
 
-header a {
+header.unsubscribe a {
     float: right;
     color: #fff;
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: bold;
     display: inline-block;
     padding: 0 10px;
 }
 
-header a:hover {
+header.unsubscribe a:hover {
     color: #a52222;
 }
+
+header.nav-container {
+    flex-shrink: 0;
+    overflow: hidden;
+    background-size: 100%;
+    background-color: #dc3133;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 0;
+}
+
+header.nav-container h1 {
+    margin: 0;
+    padding-left: 10px;
+    font-size: 2em;
+}
+
+header.nav-container h1 {
+    margin:1rem;
+}
+
+ul.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    top: 0;
+    width: 100%;
+    z-index: 1000
+}
+
+ul.nav li {
+    float: left;
+}
+
+ul.nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.nav li a:hover:not(.active) {
+    background-color: #111;
+}
+
+ul.nav .active {
+    background-color: #dc3133;
+}
+
 
 section,
 main {
