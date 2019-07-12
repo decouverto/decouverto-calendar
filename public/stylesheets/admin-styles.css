@@ -279,10 +279,6 @@ td a {
         display: grid;
         padding: 50px;
     }
-    .weather-station-box {
-        margin-left: 0;
-        height: 250px;
-    }
     .canvas-container {
         max-width: 90%;
     }
