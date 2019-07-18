@@ -8,6 +8,7 @@ var connections = require('../lib/connections.js');
 var Events = connections.Events;
 var Emails = connections.Emails;
 
+var emailService = require('../lib/emails.js');
 
 router.get('/events/', auth, function (req, res, next) {
     Events.find(function (err, events) {
@@ -157,6 +158,7 @@ router.post('/emails/', function (req, res, next) {
                 email.save(function (err) {
                     if (err) return next(err);
                     res.json(email);
+                    emailService.subscribe(email, event)
                 });
             });
         }

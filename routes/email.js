@@ -5,6 +5,8 @@ var connections = require('../lib/connections.js');
 var Events = connections.Events;
 var Emails = connections.Emails;
 
+var emailService = require('../lib/emails.js');
+
 /* GET unsubscribe page */
 router.get('/:email', function (req, res) {
     Emails.find({ email: req.params.email }).populate('event', { title: 1}).exec(function (err, email) {
@@ -45,6 +47,7 @@ router.get('/:email/:id', function (req, res) {
                     if (err) return errorUnsubscribe(req, res);
                     req.flash('success', 'Vous avez été désinscrits de l\'événement "' + event.title + '".');
                     res.redirect('/email/' + req.params.email);
+                    emailService.unsubscribe(email, event);
                 });
             });
         });
