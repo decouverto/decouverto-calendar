@@ -21,7 +21,9 @@ var weekdays = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', '
 
 /* GET home page */
 router.get('/', function (req, res) {
-    Events.find({ start: { $gte: new Date() }}).sort({start: 'asc'}).exec(function (err, events) {
+    var searchDate = new Date();
+    searchDate.setHours(searchDate.getHours()-1);
+    Events.find({ start: { $gte: searchDate }}).sort({start: 'asc'}).exec(function (err, events) {
         if (err) {
             res.locals.events = [];
         } else {
