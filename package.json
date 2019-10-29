@@ -36,7 +36,7 @@
     "express-session": "^1.15.6",
     "helmet": "^3.11.0",
     "moment": "^2.22.2",
-    "mongoose": "^5.6.0",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.0",
     "ng-notie": "0.0.1",
     "nodemailer": "^6.3.0",
