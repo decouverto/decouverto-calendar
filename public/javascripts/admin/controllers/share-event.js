@@ -44,6 +44,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
             html = html.replace(/&eacute;/g, 'é');
             html = html.replace(/&ecirc;/g, 'ê');
             html = html.replace(/&euml;/g, 'ë');
+            html = html.replace(/&nbsp;/g, '');
 
             html = html.replace(/&agrave;/g, 'à');
             html = html.replace(/&acirc;/g, 'ä');
@@ -60,6 +61,12 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
             html = html.replace(/&ugrave;/g, 'ù');
             html = html.replace(/&uuml;/g, 'ü');
             html = html.replace(/&ucirc;/g, 'û');
+
+            html = html.replace(/Km/g, 'km'); // erreur de Vincent
+
+            html = html.replace(/(\r\n|\n|\r)/gm,' ');
+            html = html.replace(/\s+/g, " ");
+
             return html;
         }
         text += '\n\n' + strip(event.description);
