@@ -289,6 +289,11 @@ a {
     background-color: #2e7d32;
 }
 
+.card img {
+    max-width: 100%;
+}
+
+
 .filter-box {
     background-color: #ffcdcb;
     border-width: 5px;
