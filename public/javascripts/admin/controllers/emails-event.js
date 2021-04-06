@@ -1,6 +1,6 @@
 module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$document', function($scope, $http, $rootScope, notie, $routeParams, $document) {
 
-    $scope.text = '';
+    $scope.textEmails = '';
 
     $scope.tinymceOptions = {
         inline: false,
@@ -23,7 +23,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
         });
         text = text.replace(/,\s*$/, '');
 
-        $scope.text = text;
+        $scope.textEmails = text;
     }
 
     $http.get('./api/events/' + $routeParams.id + '/emails').success(function(event) {
@@ -37,7 +37,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
     $scope.copy = function() {
 
         var el = document.createElement('textarea');
-        el.value = $scope.text;
+        el.value = $scope.textEmails;
         el.setAttribute('readonly', '');
         el.style.position = 'absolute';
         el.style.left = '-9999px';
