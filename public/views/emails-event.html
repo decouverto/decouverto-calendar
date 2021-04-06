@@ -3,9 +3,6 @@
 <div ng-show="can_subscribe">
     <a class="btn" ng-click="copy()">Copier les emails</a>
     <h2>Inscrits à l'événement "{{title}}"</h2>
-    <h3>Emails</h3>
-    <pre>{{text}}</pre>
-    <h3>Personnes</h3>
     <table ng-show="emails">
         <tr>
             <th>Nom</th>
@@ -28,4 +25,15 @@
             </td>
         </tr>
     </table>
+    <h2>Écrire un mail à :</h2>
+    <pre>{{text}}</pre>
+    <form name="formPub">
+        <h4>Objet</h4>
+        <input type="text" ng-model="mail.title" ng-keyup="invalidForm()">
+        <h4>Lien</h4>
+        <input type="text" ng-model="mail.link" ng-keyup="invalidForm()">
+        <h4>Texte</h4>
+        <textarea ui-tinymce="tinymceOptions" ng-model="mail.text" ng-keyup="invalidForm()"></textarea>
+        <input type="submit" class="btn btn-submit" value="Envoyer" ng-class="{'btn-disabled': invalid}" ng-disabled="invalid" ng-hide="progress" ng-click="send()">
+    </form>
 </div>
