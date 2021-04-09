@@ -10,7 +10,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
 
     // attention mail designe le mail à ecrire alors que emails désigne la liste des inscrits
     $scope.mail = {
-        title: '',
+        subject: '',
         link: '',
         text: 'Bonjour,<br><p>Voici le lien du diapo: <a href="#lien#">#lien#</a></p><p>Merci, à bientôt<br>L\'équipe Découverto</p><img src="https://calendrier.decouverto.fr/banner_email.jpg"/>'
     };
@@ -26,9 +26,22 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
         $scope.textEmails = text;
     }
 
+    $scope.sendMail = function() {
+        var mail = {
+            subject: $scope.mail.subject,
+            text: $scope.mail.text.replace(/#lien#/g, $scope.mail.link),
+            emails: $scope.textEmails
+        };
+        $http.post('./api/emails/custom', mail).success(function() {
+            notie.alert(1, 'Le message a été envoyé, vérifiez la boîte mail Découverto pour confirmation.', 3);
+        }).error(function() {
+            $rootScope.$error();
+        });
+    };
+
     $http.get('./api/events/' + $routeParams.id + '/emails').success(function(event) {
         $scope.title = event.title;
-        $scope.mail.title = event.type + ' - ' + event.title
+        $scope.mail.subject = event.type + ' - ' + event.title
         $scope.emails = event.emails;
         $scope.can_subscribe = event.can_subscribe;
         generateText(event.emails);

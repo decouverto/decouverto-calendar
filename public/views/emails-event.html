@@ -29,12 +29,12 @@
     <pre>{{textEmails}}</pre>
     <form name="formPub">
         <h4>Objet</h4>
-        <input type="text" ng-model="mail.title" ng-keyup="invalidForm()">
+        <input type="text" ng-model="mail.subject" ng-keyup="invalidForm()">
         <h4>Lien</h4>
         <input type="text" ng-model="mail.link" ng-keyup="invalidForm()">
         <h4>Texte</h4>
         <textarea ui-tinymce="tinymceOptions" ng-model="mail.text" ng-keyup="invalidForm()"></textarea>
         <br>
-        <input type="submit" class="btn btn-submit" value="Envoyer" ng-class="{'btn-disabled': invalid}" ng-disabled="invalid" ng-hide="progress" ng-click="send()">
+        <input type="submit" class="btn btn-submit" value="Envoyer" ng-class="{'btn-disabled': invalid}" ng-disabled="invalid" ng-hide="progress" ng-click="sendMail()">
     </form>
 </div>
