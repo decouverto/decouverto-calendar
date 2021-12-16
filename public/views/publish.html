@@ -24,6 +24,10 @@
     </label>
     <input type="datetime-local" ng-show="event.is_defined_end" ng-model="event.end" placeholder="aaaa-MM-ddTHH:mm:ss" />
     <hr>
+    <h3>Id de la randonnée associée (optionnel)</h3>
+    <input type="text" ng-model="event.walk_id">
+    <a class="btn btn-medium btn-light" ng-click="getPositionFromWalk()">Obtenir les coordonnées de la balade</a>
+    <hr>
     <h3>Localisation</h3>
     <label class="checkbox-container">Événement localisé
         <input type="checkbox" ng-checked="event.is_located" ng-model="event.is_located" ng-true-value="true"
@@ -50,9 +54,6 @@
         <h4>Nombre de place</h4>
         <input type="number" step="1" ng-model="event.number_limit" ng-change="invalidForm()">
     </div>
-    <hr>
-    <h4>Id de la randonnée associée (optionnel)</h4>
-    <input type="text" ng-model="event.walk_id">
     <input type="submit" class="btn btn-submit" value="Valider"
         ng-class="{'btn-disabled': invalid}"
         ng-disabled="invalid" ng-hide="progress" ng-click="publish()">

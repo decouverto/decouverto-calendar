@@ -95,6 +95,12 @@ select {
     display: none;
 }
 
+.btn-medium {
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 0;
+}
+
 .btn-small {
     margin-top: 20px;
     padding: 5px;
@@ -105,6 +111,10 @@ select {
 .btn-disabled {
     cursor: not-allowed;
     background-color: rgb(229, 229, 229) !important;
+}
+
+.btn-light {
+    background: #e83b3e;
 }
 
 a.logout {

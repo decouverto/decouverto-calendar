@@ -11,6 +11,7 @@
     "scripts": {
         "start": "node bin/decouverto-calendar",
         "code": "nodemon  --ignore public/ --ignore node_modules/ --ignore build/ -e js bin/decouverto-calendar  & gulp serve",
+        "code-front": "gulp serve",
         "build": "gulp",
         "preinstall": "npx npm-force-resolutions"
     },
