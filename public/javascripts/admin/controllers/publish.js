@@ -35,6 +35,28 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
         walk_id: '',
     };
 
+
+    $scope.getPositionFromWalk = function () {
+        if ($scope.event.walk_id == '') {
+            notie.alert(2, 'Attention: veuillez remplir un id pour la balade.', 3);
+        } else {
+            $http.get('https://decouverto.fr/walks/first-points.json').success(function(data) {
+                walk = data.filter(function(w) {
+                    return w.id == $scope.event.walk_id
+                });
+                if (walk.length == 0) {
+                    notie.alert(2, 'Aucune balade correspondante trouvée.', 3);
+                } else {
+                    walk = walk[0];
+                    $scope.event.lat = walk.coord.latitude;
+                    $scope.event.long = walk.coord.longitude;
+                    notie.alert(1, 'Coordonnées reportées.', 3);
+                }
+            }).error($rootScope.$error);
+        }
+    };
+    
+
     $scope.invalidForm = function () {
         var invalid = false;
         if ($scope.event.description == '') {
