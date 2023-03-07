@@ -5,7 +5,7 @@
     <h4>Titre</h4>
     <input type="text" ng-model="event.title" ng-keyup="invalidForm()">
     <h4>Description</h4>
-    <textarea ui-tinymce="tinymceOptions" ng-model="event.description" ng-keyup="invalidForm()"></textarea>
+    <textarea rows="20" ui-tinymce="tinymceOptions" ng-model="event.description" ng-keyup="invalidForm()"></textarea>
     <hr>
     <h4>Type d'événement</h4>
     <input type="text" ng-model="event.type" ng-keyup="checkTheme(event.type); invalidForm()">
