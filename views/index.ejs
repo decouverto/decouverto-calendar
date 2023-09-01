@@ -52,6 +52,7 @@
                         <%if (events[i].walk_id != '') { %>
                             <a href="https://decouverto.fr/rando/<%= events[i].walk_id %>" target="_blank">Balade associée</a>
                         <% } %>
+                        <a href="/ics-file/<%= events[i].id %>" target="_blank">Ajouter au calendrier (fichier .ics)</a>
                         <%if (events[i].can_subscribe) { %>
                             <%if (events[i].number_limit != events[i].emails.length) { %>
                                 <a class="subscribe subscribe-btn" eventid="<%= events[i].id %>" eventtitle="<%= events[i].title %>">S'inscrire</a>
