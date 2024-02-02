@@ -1,4 +1,4 @@
-module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$location', function ($scope, $http, $rootScope, notie, $routeParams, $location) {
+module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$location', 'Upload', function ($scope, $http, $rootScope, notie, $routeParams, $location, Upload) {
     $scope.tinymceOptions = {
         inline: false,
         skin: 'lightgray',
@@ -6,7 +6,8 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
     };
     $scope.lpath = '/list-events'
     $scope.edit = true;
-
+    $scope.content = false;
+    $scope.progressScore = 0;
     $scope.now = new Date();
     $scope.event = { description: '' };
 
@@ -44,6 +45,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
             description: event.description,
             number_limit: event.number_limit || 25,
             walk_id: event.walk_id || '',
+            filename: event.filename
         };
         if (event.is_located) {
             $scope.event.lat = event.location.lat
@@ -106,5 +108,32 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
             $rootScope.$error();
             $scope.progress = false;
         });
+    };
+
+    $scope.editImage = function () {
+        $scope.progress = true
+        var obj = {};
+        obj.file = $scope.content;
+        Upload.upload({
+            url: '/api/events/' + $routeParams.id + '/image',
+            method: 'PUT',
+            data: obj
+        }).then(function (res) {
+            notie.alert(1, 'L\'image a été ajouté.', 3);
+            $scope.progress = false;
+            $scope.event.filename = res.data.filename;
+        }, function () {
+            $scope.progress = false;
+            $rootScope.$error();
+        }, function (evt) {
+            $scope.progressScore = parseInt(100.0 * evt.loaded / evt.total);
+        });
+    };
+
+    $scope.deleteImage = function () {
+        $http.delete('/api/events/' + $routeParams.id + '/image').success(function() {
+            notie.alert(1, 'L\'image a été supprimée avec succès.', 3);
+            $scope.event.filename = '';
+        }).error($rootScope.$error);
     };
 }];

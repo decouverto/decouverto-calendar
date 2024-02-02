@@ -3,6 +3,7 @@ var router = express.Router();
 var auth = require('../policies/auth.js');
 var each = require('async-each');
 var path = require('path');
+var fs = require('fs');
 
 var connections = require('../lib/connections.js');
 var Events = connections.Events;
@@ -11,15 +12,32 @@ var Emails = connections.Emails;
 var emailService = require('../lib/emails.js');
 
 function generateRandomString(length) {
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let randomString = '';
+    var characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var randomString = '';
   
     for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
+      var randomIndex = Math.floor(Math.random() * characters.length);
       randomString += characters.charAt(randomIndex);
     }
   
     return randomString;
+}
+
+function removeImage(filename, cb) {
+    if (filename == '') {
+        return cb(null);
+    }
+    var filePath = path.resolve(__dirname, '../public/images/', filename);
+    fs.access(filePath, fs.constants.F_OK, function (err) {
+        if (!err) {
+            fs.unlink(filePath, function (err) {
+                if (err) return cb(err);
+                cb(null);
+            });
+        } else {
+            cb(null);
+        }
+    });
 }
 
 var multer = require('multer');
@@ -102,6 +120,45 @@ router.get('/events/:id/emails', auth, function(req, res, next) {
     });
 });
 
+router.put('/events/:id/image', auth, upload.single('file'), function(req, res, next) {
+    if (req.file === undefined) {
+        err = new Error('You must upload a file.');
+        err.status = 400;
+        return next(err);
+    }
+    Events.findById(req.params.id, function(err, event) {
+        if (err) return next(err);
+
+        removeImage(event.filename, function(err) {
+            if (err) return next(err);
+            event.filename = req.file.filename;
+
+            event.save(function(err) {
+                if (err) return next(err);
+                res.json(event);
+            });
+        });
+
+    });
+});
+
+router.delete('/events/:id/image', auth, function(req, res, next) {
+    Events.findById(req.params.id, function(err, event) {
+        if (err) return next(err);
+        
+        removeImage(event.filename, function(err) {
+            if (err) return next(err);
+            event.filename = '';
+
+            event.save(function(err) {
+                if (err) return next(err);
+                res.json(event);
+            });
+        });
+        
+    });
+});
+
 router.put('/events/:id', auth, function(req, res, next) {
     Events.findById(req.params.id, function(err, event) {
         if (err) return next(err);
@@ -145,9 +202,12 @@ router.delete('/events/:id', auth, function(req, res, next) {
             Emails.deleteOne({ _id: email }, callback);
         }, function(err) {
             if (err) next(err);
-            Events.deleteOne({ _id: req.params.id }, function(err, event) {
+            removeImage(event.filename, function(err) {
                 if (err) return next(err);
-                res.json({ message: 'Successfully deleted' });
+                Events.deleteOne({ _id: req.params.id }, function(err, event) {
+                    if (err) return next(err);
+                    res.json({ message: 'Successfully deleted' });
+                });
             });
         });
     });

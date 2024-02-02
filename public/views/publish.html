@@ -62,7 +62,26 @@
             ngf-pattern="'.png'"></span>
         <span ng-show="content" class="file-selected">Fichier sélectionné</span>
     </div>
+    <p ng-show="progress">Progression: {{progress}} %</p>
     <input type="submit" class="btn btn-submit" value="Valider"
         ng-class="{'btn-disabled': invalid}"
         ng-disabled="invalid" ng-hide="progress" ng-click="publish()">
+</form>
+<hr ng-show="edit">
+<form name="formEditImage" ng-show="edit">
+<h2>Édition de l'image de l'évènement</h2>
+    <img ng-show="event.filename!=''" ng-src="/images/{{event.filename}}" style="width:200px">
+    <p ng-show="event.filename==''">Aucune image est associée à l'évènement.</p>
+    <p>Préferer des images <b>carrés</b> et <b>petites</b> (1000px max par côté) pour un chargement efficace. L'image à fournir est au format <b>png</b> (<i>possibilité d'utiliser un arrière plan transparant</i>).</p>
+    <div class="group-upload">
+        <label for="content">Fichier png:</label>
+        <span ngf-select ng-model="content" id="content" name="content" class="icon-upload" required ngf-pattern="'.png'"></span>
+    <span ng-show="content" class="file-selected">Fichier sélectionné</span>
+    </div>
+    <p ng-show="progress">Progression: {{progressScore}} %</p>
+    
+    <input type="submit" class="btn btn-submit" value="Modifier l'image"
+        ng-class="{'btn-disabled': !content}"
+        ng-disabled="!content" ng-hide="progress" ng-click="editImage()">
+    <a class="btn btn-submit" ng-hide="progress" ng-click="deleteImage()" style="margin-right: 10px;">Supprimer l'image</a>
 </form>
