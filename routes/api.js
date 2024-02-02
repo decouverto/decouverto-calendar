@@ -24,7 +24,7 @@ function generateRandomString(length) {
 }
 
 function removeImage(filename, cb) {
-    if (filename == '') {
+    if (filename == '' || typeof filename === 'undefined') {
         return cb(null);
     }
     var filePath = path.resolve(__dirname, '../public/images/', filename);

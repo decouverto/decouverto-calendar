@@ -45,7 +45,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
             description: event.description,
             number_limit: event.number_limit || 25,
             walk_id: event.walk_id || '',
-            filename: event.filename
+            filename: event.filename || ''
         };
         if (event.is_located) {
             $scope.event.lat = event.location.lat
