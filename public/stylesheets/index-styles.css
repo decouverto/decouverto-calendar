@@ -293,7 +293,18 @@ a {
     max-width: 100%;
 }
 
-
+@media (min-width: 850px) {
+    .card img {
+        max-width: 50%;
+        float: left;
+        margin: 1%;
+    }
+}
+@media (min-width: 1100px) {
+    .card img {
+        max-width: 70%;
+    }
+}
 .filter-box {
     background-color: #ffcdcb;
     border-width: 5px;

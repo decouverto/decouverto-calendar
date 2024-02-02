@@ -41,6 +41,9 @@
         <% } else { %>
             <% for(var i=0; i<events.length; i++) {%>
                     <div class="card events" id="<%= events[i].id %>">
+                        <% if (events[i].filename != '') { %>
+                            <img src="/images/<%= events[i].filename %>" alt="<%= events[i].title %>">
+                        <% } %>
                         <h4 class="title"><%= events[i].title %></h4>
                         <p><b>Date:</b> <%= events[i].formatedDate %></p>
                         <p><b>Type:</b> <%=events[i].type%></p>
