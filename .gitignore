@@ -4,3 +4,4 @@ public/javascripts/index/build.js
 public/stylesheets/index-styles.min.css
 public/stylesheets/admin-styles.min.css
 email-password.json
+public/images/**.png

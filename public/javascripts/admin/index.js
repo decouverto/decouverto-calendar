@@ -3,9 +3,9 @@ require('angular-route');
 require('ng-notie');
 require('./tinymce/tinymce.min.js');
 require('./tinymce/ui-tinymce.js');
+require('ng-file-upload');
 
-
-var app = angular.module('Decouverto', ['ngNotie', 'ngRoute', 'ui.tinymce']);
+var app = angular.module('Decouverto', ['ngNotie', 'ngRoute', 'ngFileUpload', 'ui.tinymce']);
 app.config(['$routeProvider', function($routeProvider) {
         // Route configuration
         $routeProvider

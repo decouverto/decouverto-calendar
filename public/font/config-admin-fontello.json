@@ -1,5 +1,5 @@
 {
-  "name": "font",
+  "name": "",
   "css_prefix_text": "icon-",
   "css_use_suffix": false,
   "hinting": true,
@@ -13,27 +13,33 @@
       "src": "fontawesome"
     },
     {
-      "uid": "f48ae54adfb27d8ada53d0fd9e34ee10",
+      "uid": "bbfb51903f40597f0b70fd75bc7b5cac",
       "css": "trash",
-      "code": 59395,
+      "code": 61944,
       "src": "fontawesome"
     },
     {
       "uid": "b387bb08e237859ba573fb32e2117310",
       "css": "power",
-      "code": 59398,
+      "code": 59393,
       "src": "typicons"
     },
     {
-      "uid": "91426c82d94428a33353e495418435e3",
+      "uid": "4aad6bb50b02c18508aae9cbe14e784e",
       "css": "share",
-      "code": 59393,
-      "src": "entypo"
+      "code": 61920,
+      "src": "fontawesome"
     },
     {
       "uid": "31972e4e9d080eaa796290349ae6c1fd",
       "css": "users",
       "code": 59394,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "eeec3208c90b7b48e804919d0d2d4a41",
+      "css": "upload",
+      "code": 59395,
       "src": "fontawesome"
     }
   ]

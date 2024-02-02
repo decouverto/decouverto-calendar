@@ -54,6 +54,14 @@
         <h4>Nombre de place</h4>
         <input type="number" step="1" ng-model="event.number_limit" ng-change="invalidForm()">
     </div>
+    <h3 ng-hide="edit">Image</h3>
+    <p ng-hide="edit">Préferer des images <b>carrés</b> et <b>petites</b> (1000px max par côté) pour un chargement efficace. L'image à fournir est au format <b>png</b> (<i>possibilité d'utiliser un arrière plan transparant</i>).</p>
+    <div class="group-upload" ng-hide="edit">
+        <label for="content">Fichier png:</label>
+        <span ngf-select ng-model="content" id="content" name="content" class="icon-upload" required
+            ngf-pattern="'.png'"></span>
+        <span ng-show="content" class="file-selected">Fichier sélectionné</span>
+    </div>
     <input type="submit" class="btn btn-submit" value="Valider"
         ng-class="{'btn-disabled': invalid}"
         ng-disabled="invalid" ng-hide="progress" ng-click="publish()">

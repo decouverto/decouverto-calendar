@@ -1,4 +1,4 @@
-module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', function ($scope, $http, $rootScope, notie, $location) {
+module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', 'Upload', function ($scope, $http, $rootScope, notie, $location, Upload) {
     $scope.tinymceOptions = {
         inline: false,
         skin: 'lightgray',
@@ -95,13 +95,20 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', functio
 
     $scope.publish = function () {
         $scope.progress = true
-        $http.post('./api/events/', $scope.event).success(function (data) {
+        var obj = $scope.event;
+        obj.file = $scope.content;
+        Upload.upload({
+            url: '/api/events/',
+            data: obj
+        }).then(function (res) {
             notie.alert(1, 'L\'événement a été ajouté.', 3);
             $scope.progress = false;
-            $location.path('/share-event/' + data._id);
-        }).error(function () {
-            $rootScope.$error();
+            $location.path('/share-event/' + res.data._id);
+        }, function () {
             $scope.progress = false;
+            $rootScope.$error();
+        }, function (evt) {
+            $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
         });
     };
 }];

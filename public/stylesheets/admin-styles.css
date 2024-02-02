@@ -308,38 +308,68 @@ td a {
 }
 
 @font-face {
-    font-family: 'font';
-    src: url('/font/admin-font.eot?70528364');
-    src: url('/font/admin-font.eot?70528364#iefix') format('embedded-opentype'), url('/font/admin-font.woff2?70528364') format('woff2'), url('/font/admin-font.woff?70528364') format('woff'), url('/font/admin-font.ttf?70528364') format('truetype'), url('/font/admin-font.svg?70528364#font') format('svg');
+    font-family: 'admin-font';
+    src: url('../font/admin-font.eot?12298674');
+    src: url('../font/admin-font.eot?12298674#iefix') format('embedded-opentype'),
+         url('../font/admin-font.woff2?12298674') format('woff2'),
+         url('../font/admin-font.woff?12298674') format('woff'),
+         url('../font/admin-font.ttf?12298674') format('truetype'),
+         url('../font/admin-font.svg?12298674#admin-font') format('svg');
     font-weight: normal;
     font-style: normal;
-}
-
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
-    font-family: "font";
+  }
+  /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+  /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+  /*
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+      font-family: 'admin-font';
+      src: url('../font/admin-font.svg?12298674#admin-font') format('svg');
+    }
+  }
+  */
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "admin-font";
     font-style: normal;
     font-weight: normal;
-    speak: none;
+    speak: never;
+  
     display: inline-block;
     text-decoration: inherit;
     width: 1em;
     margin-right: .2em;
     text-align: center;
+    /* opacity: .8; */
+  
+    /* For safety - reset parent styles, that can break glyph codes*/
     font-variant: normal;
     text-transform: none;
+  
+    /* fix buttons height, for twitter bootstrap */
     line-height: 1em;
+  
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
     margin-left: .2em;
-    font-size: 120%;
+  
+    /* you can be more comfortable with increased icons size */
+    /* font-size: 120%; */
+  
+    /* Font smoothing. That was taken from TWBS */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
 .icon-pencil:before { content: '\e800'; }
-.icon-share:before { content: '\e801'; }
+.icon-power:before { content: '\e801'; }
 .icon-users:before { content: '\e802'; }
-.icon-trash:before { content: '\e803'; } 
-.icon-power:before { content: '\e806'; }
+.icon-upload:before { content: '\e803'; } 
+.icon-share:before { content: '\f1e0'; } 
+.icon-trash:before { content: '\f1f8'; } 
+
 
 pre {
 	width: 100%;
@@ -358,4 +388,18 @@ canvas {
     display: block;
     margin: 10px 0;
     cursor: pointer;
+}
+
+.file-selected {
+    color: #14773d;
+    margin-left: 8px;
+}
+
+.group-upload {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.group-upload * {
+    display: inline-block
 }

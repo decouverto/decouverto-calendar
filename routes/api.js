@@ -2,12 +2,37 @@ var express = require('express');
 var router = express.Router();
 var auth = require('../policies/auth.js');
 var each = require('async-each');
+var path = require('path');
 
 var connections = require('../lib/connections.js');
 var Events = connections.Events;
 var Emails = connections.Emails;
 
 var emailService = require('../lib/emails.js');
+
+function generateRandomString(length) {
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let randomString = '';
+  
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters.charAt(randomIndex);
+    }
+  
+    return randomString;
+}
+
+var multer = require('multer');
+var upload = multer({
+    storage: multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, path.resolve(__dirname, '../public/images/'));
+        },
+        filename: function (req, file, cb) {
+            cb(null, generateRandomString(7) + '.png');
+        }
+    })
+});
 
 router.get('/events/', auth, function(req, res, next) {
     Events.find(function(err, events) {
@@ -24,14 +49,19 @@ router.get('/events/types', auth, function(req, res, next) {
 })
 
 
-router.post('/events/', auth, function(req, res, next) {
+router.post('/events/', auth, upload.single('file'), function(req, res, next) {
     var event = new Events();
+    if (req.file === undefined) {
+        event.filename = '';
+    } else {
+        event.filename = req.file.filename;
+    }
+    
 
     event.title = req.body.title;
     event.type = req.body.type;
     event.start = req.body.start;
     event.description = req.body.description;
-
 
     event.can_subscribe = req.body.can_subscribe;
     if (req.body.can_subscribe) {
