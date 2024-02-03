@@ -55,7 +55,7 @@
         <input type="number" step="1" ng-model="event.number_limit" ng-change="invalidForm()">
     </div>
     <h3 ng-hide="edit">Image</h3>
-    <p ng-hide="edit">Préferer des images <b>carrés</b> et <b>petites</b> (1000px max par côté) pour un chargement efficace. L'image à fournir est au format <b>png</b> (<i>possibilité d'utiliser un arrière plan transparant</i>).</p>
+    <p ng-hide="edit">Préferer des images <b>carrés</b> et <b>petites</b> (400px minimum en largeur, 600px pour les affiches) pour un chargement efficace. L'image à fournir est au format <b>png</b> (<i>possibilité d'utiliser un arrière plan transparant</i>).</p>
     <div class="group-upload" ng-hide="edit">
         <label for="content">Fichier png:</label>
         <span ngf-select ng-model="content" id="content" name="content" class="icon-upload" required
@@ -72,7 +72,7 @@
 <h2>Édition de l'image de l'évènement</h2>
     <img ng-show="event.filename!=''" ng-src="/images/{{event.filename}}" style="width:200px">
     <p ng-show="event.filename==''">Aucune image est associée à l'évènement.</p>
-    <p>Préferer des images <b>carrés</b> et <b>petites</b> (1000px max par côté) pour un chargement efficace. L'image à fournir est au format <b>png</b> (<i>possibilité d'utiliser un arrière plan transparant</i>).</p>
+    <p>Préferer des images <b>carrés</b> et <b>petites</b> (400px minimum en largeur, 600px pour les affiches) pour un chargement efficace. L'image à fournir est au format <b>png</b> (<i>possibilité d'utiliser un arrière plan transparant</i>).</p>
     <div class="group-upload">
         <label for="content">Fichier png:</label>
         <span ngf-select ng-model="content" id="content" name="content" class="icon-upload" required ngf-pattern="'.png'"></span>

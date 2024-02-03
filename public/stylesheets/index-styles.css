@@ -248,6 +248,7 @@ a {
     animation-name: fadeIn;
     animation-duration: 1s;
     animation-fill-mode: both;
+    overflow: hidden;
 }
 
 .card a {
@@ -293,7 +294,7 @@ a {
     max-width: 100%;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 650px) {
     .card img {
         max-width: 50%;
         float: left;
