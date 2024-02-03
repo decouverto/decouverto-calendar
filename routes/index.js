@@ -48,6 +48,37 @@ router.get('/', function (req, res) {
     
 });
 
+router.get('/evenement/:id', function (req, res, next) {
+    var searchDate = new Date();
+    searchDate.setHours(searchDate.getHours()-1);
+    Events.find({ start: { $gte: searchDate }}).sort({start: 'asc'}).exec(function (err, events) {
+        if (err) return next(err);
+        if (events.length==0) {
+            res.status(404);
+            return res.redirect('/');
+        }
+        for(var i=0; i<events.length; i++) {
+            if (events[i]._id == req.params.id) {
+                var start = new Date(events[i].start);
+                var text = 'Le ' + weekdays[start.getDay()] + ' ' +  getDay(start);
+            
+                if (events[i].is_defined_end) {
+                    text += ' de ' + getHours(start) + ' à ';
+                    var end = new Date(events[i].end);
+                    text += getHours(end);
+                } else {
+                    text += ' à ' + getHours(start);
+                }
+                events[i].formatedDate = text
+                res.locals.event = events[i];
+                return res.render('event');
+            }
+        }
+        res.status(404);
+        return res.redirect('/');
+    });
+});
+
 
 /**
  * Create ICS file for calendar apps

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Découverto | Calendrier - <%= event.title %></title>
+    <link rel="stylesheet" href="/stylesheets/index-styles.min.css" />
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="theme-color" content="#dc3133">
+    <meta name="msapplication-navbutton-color" content="#dc3133">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta itemprop="name" content="Découverto | Calendrier - <%= event.title %>">
+    <meta name="description" content="Évènement: <%=event.type%> - <%= event.title %> <%= event.formatedDate %>">
+    <meta name="og:description" content="Évènement: <%=event.type%> - <%= event.title %> <%= event.formatedDate %>">
+    <meta itemprop="description" content="Évènement: <%=event.type%> - <%= event.title %> <%= event.formatedDate %>">
+    <% if (typeof event.filename != 'undefined' && event.filename != '') { %>
+        <meta property="og:image" content="https://calendrier.decouverto.fr/images/<%= event.filename %>">
+        <meta itemprop="image" name="image" content="https://calendrier.decouverto.fr/images/<%= event.filename %>">
+    <% } else { %>
+        <meta property="og:image" content="https://decouverto.fr/icons/512.png" />
+        <meta itemprop="image" name="image" content="https://decouverto.fr/icons/512.png">
+    <% } %>
+    <meta property="og:image:type" content="image/png" />
+    <meta name="og:title" content="Découverto | Calendrier <%= event.title %>">
+    <meta name="og:url" content="https://calendrier.decouverto.fr/">
+    <meta name="og:site_name" content="Découverto">
+    <meta name="og:locale" content="fr_FR">
+    <meta name="fb:admins" content="1803338833217763">
+    <meta name="og:type" content="website">
+</head>
+<body>
+    <header class="nav-container">
+        <ul class="nav">
+            <li><a href="https://decouverto.fr">Accueil</a></li>
+            <li><a href="#" class="active">Calendrier</a></li>
+            <li><a href="https://decouverto.fr/livres">Livres</a></li>
+            <li><a href="https://app.decouverto.fr" target="_blank">Application</a></li>
+            <li><a href="https://podcast.decouverto.fr">Podcasts</a></li>
+	    <li><a href="https://decouverto.fr/rando">Randonnées</a></li>
+        </ul>
+        <h1>Découverto</h1>
+    </header>
+    <section class="content">
+        <p><a class="btn-leave" href="/">Autres évènements Découverto</a></p>
+        <h2><%= event.title %></h2>
+        <div class="card events" id="<%= event.id %>">
+            <% if (typeof event.filename != 'undefined' && event.filename != '') { %>
+                <img src="/images/<%= event.filename %>" alt="<%= event.title %>">
+            <% } %>
+            <p><b>Date:</b> <%= event.formatedDate %></p>
+            <p><b>Type:</b> <%=event.type%></p>
+            <div class="description"><%- event.description %></div>
+            <%if (event.is_located) { %>
+                <p><b>Lieu:</b> <%=event.location.name %></p>
+                <a href="http://maps.google.com/?q=<%= event.location.lat %>,<%= event.location.long %>" target="_blank" title="Point de départ">S'y rendre</a>
+            <% } %>
+            <%if (event.walk_id != '') { %>
+                <a href="https://decouverto.fr/rando/<%= event.walk_id %>" target="_blank">Balade associée</a>
+            <% } %>
+            <a href="/ics-file/<%= event.id %>" target="_blank">Ajouter au calendrier (fichier .ics)</a>
+            <%if (event.can_subscribe) { %>
+                <%if (event.number_limit != event.emails.length) { %>
+                    <a class="subscribe subscribe-btn" eventid="<%= event.id %>" eventtitle="<%= event.title %>">S'inscrire</a>
+                <% } else { %>
+                    <p class="event_full">Plus de place disponible.</p>
+                <% } %>
+            <% } %>
+        </div>
+        <p><a class="btn-leave" href="/">Autres évènements Découverto</a></p>
+    </section>
+
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Inscription</h2>
+            </div>
+            <div class="modal-body">
+                <div id="default-modal-body"> 
+                    <p>Vous allez vous inscire à l'événement "<span id="event-choosed"></span>".</p>
+                    <p>Vous pouvez vous désinscrire à tout moment.</p>
+                    
+                    <form>
+                        <p class="warn" id="warn-form" style="display: none;">Le formulaire est invalide.</p>
+                        <p class="error" id="error-form" style="display: none;">Une erreur est survenue. Il se peut que vous soyez déjà inscrit ou que trop de personnes soient inscrites.</p>
+                        <div class="input-group">
+                            <label for="firstname-input">Prénom:</label>
+                            <input type="text" id="firstname-input" placeholder="Prénom" class="input">
+                        </div>
+                        <div class="input-group">
+                            <label for="name-input">Nom:</label>
+                            <input type="text" id="name-input" placeholder="Nom" class="input">
+                        </div>
+                        <div class="input-group">
+                            <label for="email-input">Email:</label>
+                            <input type="email" id="email-input" placeholder="Email" class="input">
+                        </div>
+                        <button class="subscribe" id="subscribe-btn">S'inscrire</button>
+                    </form>
+                    
+                    <p class="data-privacy">Vos données personnelles ne seront pas vendues et seront supprimées de nos serveurs une fois l'événement passé.</p>
+                </div>
+                <div id="success-modal-body" style="display: none;">
+                    <p>Vous avez bien été inscrit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('includes/footer'); %>
+    <script type="text/javascript" src="/javascripts/event/build.js"></script>
+</body>
+</html>

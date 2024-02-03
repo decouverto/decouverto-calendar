@@ -66,6 +66,8 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
 
             html = html.replace(/(\r\n|\n|\r)/gm,' ');
             html = html.replace(/\s+/g, " ");
+            
+            html = html.replace(/&rsquo;/g, "'");
 
             return html;
         }
@@ -78,9 +80,9 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$do
 
         /* Lien */
         if (event.can_subscribe) {
-            text += '\n\nInscription sur: https://calendrier.decouverto.fr/#/' + $routeParams.id;
+            text += '\n\nInscription sur: https://calendrier.decouverto.fr/evenement/' + $routeParams.id;
         } else {
-            text += '\n\nPlus de détails sur: https://calendrier.decouverto.fr/#/' + $routeParams.id;
+            text += '\n\nPlus de détails sur: https://calendrier.decouverto.fr/evenement/' + $routeParams.id;
         }
 
         $scope.text = text;

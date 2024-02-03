@@ -43,6 +43,21 @@ gulp.task('js-index', function () {
       .pipe(gulp.dest('public/javascripts/index/'));
 });
 
+gulp.task('js-event', function () {
+  var b = browserify({
+    entries: 'public/javascripts/event/index.js',
+    debug: true
+  });
+
+  return b.bundle()
+    .pipe(source('public/javascripts/event/index.js'))
+    .pipe(buffer())
+    .pipe(uglify())
+      .on('error', log.error)
+    .pipe(rename('build.js'))
+    .pipe(gulp.dest('public/javascripts/event/'));
+});
+
 
 gulp.task('js-admin', function () {
     var b = browserify({
@@ -91,7 +106,7 @@ gulp.task('js-admin-watch', ['js-admin-dev'], function (done) {
     done();
 });
 
-gulp.task('js-preview-watch', ['js-preview'], function (done) {
+gulp.task('js-event-watch', ['js-event'], function (done) {
     browserSync.reload();
     done();
 });
@@ -100,9 +115,8 @@ gulp.task('reload', function (done) {
     done();
 });
 
-gulp.task('js', ['js-admin', 'js-index']);
+gulp.task('js', ['js-admin', 'js-index', 'js-event']);
 gulp.task('css', ['css-index', 'css-admin']);
-
 
 gulp.task('default', ['js', 'css']);
 
@@ -121,6 +135,6 @@ gulp.task('serve', function () {
     gulp.watch('public/stylesheets/index-styles.css', ['css-index-watch']);
     gulp.watch(['public/javascripts/index/**/**.js', '!public/javascripts/index/build.js'], ['js-index-watch']);
     gulp.watch(['public/javascripts/admin/**/**.js', '!public/javascripts/admin/build.js'], ['js-admin-watch']);
-    gulp.watch(['public/javascripts/preview/**/**.js', '!public/javascripts/preview/build.js'], ['js-preview-watch']);
+    gulp.watch(['public/javascripts/event/**/**.js', '!public/javascripts/event/build.js'], ['js-event-watch']);
 });
 
