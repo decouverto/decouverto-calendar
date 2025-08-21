@@ -29,6 +29,10 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
             }).error($rootScope.$error);
         }
     };
+
+    $scope.setRandomInitialNumberParticipants = function () {
+        $scope.event.initial_number_participants = Math.floor(Math.random() * ($scope.event.number_limit/2));
+    };
     
     $http.get('./api/events/' + $routeParams.id).success(function (event) {
         $scope.event = {

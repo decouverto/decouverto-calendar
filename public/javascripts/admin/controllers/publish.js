@@ -25,17 +25,20 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$location', 'Upload
         start: nextSunday(10),
         is_defined_end: false,
         end: nextSunday(19),
-        can_subscribe: false,
+        can_subscribe: true,
         is_located: true,
         lat: 0,
         long: 0,
         location_name: 'Parking',
         description: '<p style="margin:0;padding:0;font-size:12px;text-align:justify"><strong><span style="font-size:18px">Bonjour, bienvenue sur cette rando-promenade.</span></strong></p><p style="margin:0;padding:0;font-size:12px;text-align:justify"><span style="font-size:18px;color:#2980b9">En participant à cette sortie, vous vous engagez à respecter les mesures sanitaires actuelles (notamment en ayant un masque sur vous).</span></p><p style="margin:0;padding:0;font-size:12px;text-align:justify"><span style="font-size:18px;color:#2980b9">Les gestes barrières devront être respectés tout au long de la sortie.</span></p><p style="margin:0;padding:0;font-size:12px;text-align:justify"><span style="font-size:18px;color:#ff4aff"><strong><span style="color:#c000c0">On se retrouve aux environs de 10h</span><span style="font-size:8px">(disons entre 10h et 10h15)</span></strong></span></p><p style="margin:0;padding:0;font-size:12px;text-align:justify"><span style="font-size:18px"><strong>Prévoir un repas tiré du sac.</strong><br></span></p><p style="margin:0;padding:0;font-size:12px;text-align:justify"><span style="font-size:18px;color:#009b00"><strong>13 km 300m</strong> de dénivelé</span></p><p style="margin:0;padding:0;font-size:12px;text-align:justify;color:#632280">Attention la sortie est filmée. En vous y inscrivant vous donnez votre accord pour céder votre droit à l’image.</p>',
         number_limit: 25,
-        initial_number_participants: 0,
+        initial_number_participants: Math.floor(Math.random() * 10), // random between 0 and number_limit/2
         walk_id: '',
     };
 
+    $scope.setRandomInitialNumberParticipants = function () {
+        $scope.event.initial_number_participants = Math.floor(Math.random() * ($scope.event.number_limit/2));
+    };
 
     $scope.getPositionFromWalk = function () {
         if ($scope.event.walk_id == '') {

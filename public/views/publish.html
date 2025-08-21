@@ -35,7 +35,7 @@
         <span class="checkmark"></span>
     </label>
     <div ng-show="event.is_located">
-        <p><a href="https://www.gps-longitude-latitude.net/" target="_blank">Obtenir latitude et longitude</a></p>
+        <p><a class="btn btn-medium btn-light" href="https://www.gps-longitude-latitude.net/" target="_blank">Obtenir latitude et longitude</a></p>
         <h4>Nom - Adresse</h4>
         <input type="text" ng-model="event.location_name" ng-keyup="invalidForm()">
         <h4>Longitude <i>(souvent en '7.')</i> </h4>
@@ -53,8 +53,9 @@
     <div ng-show="event.can_subscribe">
         <h4>Nombre de place</h4>
         <input type="number" step="1" ng-model="event.number_limit" ng-change="invalidForm()">
-        <h4>Nombre initial de participants</h4>
+        <h4>Nombre initial de participants <i>(pour inciter les personnes à s'inscrire)</i></h4>
         <input type="number" step="1" ng-model="event.initial_number_participants" ng-change="invalidForm()">
+        <a class="btn btn-medium btn-light" ng-click="setRandomInitialNumberParticipants()">Choisir un nombre aléatoire</a>
     </div>
     <h3 ng-hide="edit">Image</h3>
     <p ng-hide="edit">Préferer des images <b>carrés</b> et <b>petites</b> (400px minimum en largeur, 600px pour les affiches) pour un chargement efficace. L'image à fournir est au format <b>png</b> (<i>possibilité d'utiliser un arrière plan transparant</i>).</p>
