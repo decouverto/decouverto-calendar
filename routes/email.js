@@ -6,12 +6,36 @@ var Events = connections.Events;
 var Emails = connections.Emails;
 
 var emailService = require('../lib/emails.js');
+var weekdays = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+
+function getHours(date) {
+    return date.getHours() + 'h' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+}
+
+
+function getDay(date) {
+    return (date.getDate() < 10 ? '0' : '') + date.getDate() + '/' + (date.getMonth() < 10 ? '0' : '') + (date.getMonth() + 1);
+}
 
 /* GET unsubscribe page */
 router.get('/:email', function (req, res) {
-    Emails.find({ email: req.params.email }).populate('event', { title: 1}).exec(function (err, email) {
+    Emails.find({ email: req.params.email }).populate('event', { title: 1, start: 1, type: 1}).exec(function (err, email) {
         if (err) return next(err);
         res.locals.email = email;
+        for (var i=0; i<res.locals.email.length; i++) {
+            console.log(res.locals.email[i].event);
+                var start = new Date(res.locals.email[i].event.start);
+                var text = 'Le ' + weekdays[start.getDay()] + ' ' +  getDay(start);
+        
+                if (res.locals.email[i].event.is_defined_end) {
+                    text += ' de ' + getHours(start) + ' à ';
+                    var end = new Date(res.locals.email[i].event.end);
+                    text += getHours(end);
+                } else {
+                    text += ' à ' + getHours(start);
+                }
+                res.locals.email[i].event.formatedDate = text
+        }
         res.locals.error = req.flash('error');
         res.locals.success = req.flash('success');
         res.render('email-page');
