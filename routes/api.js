@@ -100,6 +100,7 @@ router.post('/events/', auth, upload.single('file'), function(req, res, next) {
     }
 
     event.walk_id = req.body.walk_id;
+    event.initial_number_participants = req.body.initial_number_participants || 0;
 
     event.save(function(err) {
         if (err) return next(err);
@@ -187,6 +188,7 @@ router.put('/events/:id', auth, function(req, res, next) {
         }
 
         event.walk_id = req.body.walk_id;
+        event.initial_number_participants = req.body.initial_number_participants || 0;
 
         event.save(function(err) {
             if (err) return next(err);

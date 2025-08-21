@@ -14,6 +14,7 @@ module.exports = new mongoose.Schema({
     },
     description: String,
     number_limit: Number,
+    initial_number_participants: { type: Number, default: 0 },
     is_located: Boolean,
     is_defined_end: Boolean,
     walk_id: String,

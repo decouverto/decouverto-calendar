@@ -5,3 +5,4 @@ public/stylesheets/index-styles.min.css
 public/stylesheets/admin-styles.min.css
 email-password.json
 public/images/**.png
+mongo_backups/**

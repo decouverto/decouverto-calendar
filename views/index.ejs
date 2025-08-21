@@ -57,7 +57,7 @@
                         <% } %>
                         <a href="/ics-file/<%= events[i].id %>" target="_blank">Ajouter au calendrier (fichier .ics)</a>
                         <%if (events[i].can_subscribe) { %>
-                            <%if (events[i].number_limit != events[i].emails.length) { %>
+                            <%if ((events[i].emails.length + (events[i].initial_number_participants || 0)) < events[i].number_limit) { %>
                                 <a class="subscribe subscribe-btn" eventid="<%= events[i].id %>" eventtitle="<%= events[i].title %>">S'inscrire</a>
                             <% } else { %>
                                 <p class="event_full">Plus de place disponible.</p>

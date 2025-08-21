@@ -44,6 +44,7 @@ module.exports = ['$scope', '$http', '$rootScope', 'notie', '$routeParams', '$lo
             location_name: '',
             description: event.description,
             number_limit: event.number_limit || 25,
+            initial_number_participants: event.initial_number_participants || 0,
             walk_id: event.walk_id || '',
             filename: event.filename || ''
         };
