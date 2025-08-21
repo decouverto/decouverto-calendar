@@ -242,6 +242,7 @@ router.post('/emails/', function(req, res, next) {
             err.status = 403;
             next(err);
         } else {
+            //event.initial_number_participants = event.initial_number_participants - 1; // if necessary
             event.emails.push(email);
 
             event.save(function(err) {

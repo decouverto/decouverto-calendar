@@ -47,6 +47,7 @@
                         <h4 class="title"><%= events[i].title %></h4>
                         <p><b>Date:</b> <%= events[i].formatedDate %></p>
                         <p><b>Type:</b> <%=events[i].type%></p>
+                        <p><b>Nombre de participants:</b> <%=events[i].emails.length+events[i].initial_number_participants%></p>
                         <div class="description"><%- events[i].description %></div>
                         <%if (events[i].is_located) { %>
                             <p><b>Lieu:</b> <%=events[i].location.name %></p>

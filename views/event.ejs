@@ -48,6 +48,7 @@
             <% } %>
             <p><b>Date:</b> <%= event.formatedDate %></p>
             <p><b>Type:</b> <%=event.type%></p>
+            <p><b>Nombre de participants:</b> <%=event.emails.length+event.initial_number_participants%></p>
             <div class="description"><%- event.description %></div>
             <%if (event.is_located) { %>
                 <p><b>Lieu:</b> <%=event.location.name %></p>
