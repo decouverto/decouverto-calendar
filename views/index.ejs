@@ -42,12 +42,12 @@
             <% for(var i=0; i<events.length; i++) {%>
                     <div class="card events" id="<%= events[i].id %>">
                         <% if (typeof events[i].filename != 'undefined' && events[i].filename != '') { %>
-                            <img src="/images/<%= events[i].filename %>" alt="<%= events[i].title %>">
+                            <img src="/images/<%= events[i].filename %>" alt="<%= events[i].title %>" loading="lazy">
                         <% } %>
                         <h4 class="title"><%= events[i].title %></h4>
                         <p><b>Date:</b> <%= events[i].formatedDate %></p>
                         <p><b>Type:</b> <%=events[i].type%></p>
-                        <p><b>Nombre de participants:</b> <%=events[i].emails.length+events[i].initial_number_participants%></p>
+                        <%if (events[i].can_subscribe) { %><p><b>Nombre de participants:</b> <%=events[i].emails.length+events[i].initial_number_participants%></p><% } %>
                         <div class="description"><%- events[i].description %></div>
                         <%if (events[i].is_located) { %>
                             <p><b>Lieu:</b> <%=events[i].location.name %></p>
